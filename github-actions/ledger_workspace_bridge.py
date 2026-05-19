@@ -118,7 +118,7 @@ def load_latest_hub_results_by_task_id(artifacts_root: Path) -> dict[str, dict]:
 
 
 def build_snapshot(repo_root: Path, artifacts_root: Path, workspace_path: str, limit: int):
-    ledger_index_path = repo_root / "AGENT协作工具" / "ledger" / "tasks" / "index.json"
+    ledger_index_path = repo_root / "ledger" / "tasks" / "index.json"
     ledger_index = read_json_file(ledger_index_path, {"open_tasks": [], "tasks": []})
     tasks = [t for t in (ledger_index.get("tasks") or []) if isinstance(t, dict)]
     workspace_tasks = [t for t in tasks if str(t.get("workspace_path") or "").strip() == workspace_path]
@@ -146,7 +146,7 @@ def build_snapshot(repo_root: Path, artifacts_root: Path, workspace_path: str, l
 def find_repo_root(start: Path) -> Path:
     p = start.resolve()
     for candidate in [p, *p.parents]:
-        if (candidate / "AGENT协作工具" / "ledger" / "tasks" / "index.json").exists():
+        if (candidate / "ledger" / "tasks" / "index.json").exists():
             return candidate
     raise SystemExit("repo_root_not_found")
 

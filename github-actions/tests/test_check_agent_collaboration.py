@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[2]
 MODULE_PATH = Path(__file__).resolve().parents[1] / "check_agent_collaboration.py"
 SPEC = importlib.util.spec_from_file_location("check_agent_collaboration", MODULE_PATH)
 MODULE = importlib.util.module_from_spec(SPEC)

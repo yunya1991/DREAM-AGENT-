@@ -61,7 +61,7 @@ def promote_tasks(
     if not nra and not scp:
         raise ValueError("missing_acceptance_checklist")
 
-    ledger_path = repo_root / "AGENT协作工具" / "ledger" / "tasks" / "index.json"
+    ledger_path = repo_root / "ledger" / "tasks" / "index.json"
     data = read_json_file(ledger_path)
 
     tasks = data.get("tasks") or []
@@ -99,7 +99,7 @@ def promote_tasks(
 def find_repo_root(start: Path) -> Path:
     p = start.resolve()
     for candidate in [p, *p.parents]:
-        if (candidate / "AGENT协作工具" / "ledger" / "tasks" / "index.json").exists():
+        if (candidate / "ledger" / "tasks" / "index.json").exists():
             return candidate
     raise SystemExit("repo_root_not_found")
 

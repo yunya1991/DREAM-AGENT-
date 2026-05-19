@@ -8,8 +8,8 @@ import unittest
 from pathlib import Path
 
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
-SKILL_ROOT = REPO_ROOT / "AGENT协作工具" / "SKILLS" / "collab-ledger-planner"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+SKILL_ROOT = REPO_ROOT / "SKILLS" / "collab-ledger-planner"
 LEDGER_SYNC_PATH = SKILL_ROOT / "ledger_sync.py"
 LEDGER_SYNC_SPEC = importlib.util.spec_from_file_location("ledger_sync", LEDGER_SYNC_PATH)
 LEDGER_SYNC = importlib.util.module_from_spec(LEDGER_SYNC_SPEC)
@@ -28,8 +28,8 @@ class CollabLedgerSyncContractTests(unittest.TestCase):
     def test_push_status_outputs_ledger_sync_comment(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
-            (root / "AGENT协作工具" / "ledger" / "tasks").mkdir(parents=True, exist_ok=True)
-            (root / "AGENT协作工具" / "ledger" / "tasks" / "index.json").write_text(
+            (root / "ledger" / "tasks").mkdir(parents=True, exist_ok=True)
+            (root / "ledger" / "tasks" / "index.json").write_text(
                 json.dumps(
                     {
                         "version": 1,
@@ -64,7 +64,7 @@ class CollabLedgerSyncContractTests(unittest.TestCase):
                         "workspace": "WS",
                         "last_sync": "2026-05-18T00:00:00Z",
                         "trigger": "CLI sync",
-                        "protocol_file": "AGENT协作工具/ledger/protocols/WS-LEDGER-20260518.md",
+                        "protocol_file": "ledger/protocols/WS-LEDGER-20260518.md",
                         "ledger_sha": "force-drift",
                         "task_prefix": "x",
                         "goal_id": "goal-x",

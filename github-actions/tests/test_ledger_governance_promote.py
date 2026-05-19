@@ -16,7 +16,7 @@ class LedgerGovernancePromoteTests(unittest.TestCase):
     def test_promotes_planned_to_accepted_and_requires_checklist(self):
         with tempfile.TemporaryDirectory() as tmp:
             repo_root = Path(tmp)
-            ledger_path = repo_root / "AGENT协作工具" / "ledger" / "tasks" / "index.json"
+            ledger_path = repo_root / "ledger" / "tasks" / "index.json"
             ledger_path.parent.mkdir(parents=True)
             ledger_path.write_text(
                 json.dumps(

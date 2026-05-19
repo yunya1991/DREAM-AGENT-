@@ -56,7 +56,7 @@ class GovernanceClosureTests(unittest.TestCase):
     def test_builds_governance_closure_record(self):
         closure = MODULE.build_governance_closure(
             archive_summary="closed with sync notes",
-            index_updates=["AGENT协作工具/docs/README.md"],
+            index_updates=["docs/README.md"],
             faq_decision="written",
             faq_entries=["shared-sync closeout"],
             closure_agent="SOLO-GOV",
@@ -125,11 +125,11 @@ class GovernanceUpdaterIOTests(unittest.TestCase):
 class WorkflowEntrypointTests(unittest.TestCase):
     def test_ledger_maintenance_workflow_surfaces_governance_suite(self):
         text = (
-            ROOT.parent / ".github" / "workflows" / "agent-ledger-maintenance.yml"
+            ROOT / ".github" / "workflows" / "agent-ledger-maintenance.yml"
         ).read_text(encoding="utf-8")
         self.assertIn("Validate collaboration and governance assets", text)
         self.assertIn(
-            'python3 -m unittest discover -s "AGENT协作工具/github-actions/tests" -p "test_*.py"',
+            'python3 -m unittest discover -s "github-actions/tests" -p "test_*.py"',
             text,
         )
 

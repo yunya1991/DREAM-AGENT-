@@ -34,7 +34,7 @@ class CollaborationPayloadTests(unittest.TestCase):
                 "Proposal Type: bugfix\n"
                 "Necessity:\n- close gap\n"
                 "Value:\n- remove blocker\n"
-                "Scope Boundaries:\n- AGENT协作工具/ledger/\n"
+                "Scope Boundaries:\n- ledger/\n"
                 "Requested Exclusive Window: 2026-05-18T00:00:00Z\n"
                 "Status: EXPLORATION_PROPOSAL\n",
                 "[验证结论 / VALIDATION_RESULT]\n\n"
@@ -43,7 +43,7 @@ class CollaborationPayloadTests(unittest.TestCase):
                 "Score: 88\n"
                 "Decision: ACCEPTED\n"
                 "Reward Multiplier: 1.2\n"
-                "Ledger Update: AGENT协作工具/ledger/tasks/index.json\n",
+                "Ledger Update: ledger/tasks/index.json\n",
             ],
         }
 

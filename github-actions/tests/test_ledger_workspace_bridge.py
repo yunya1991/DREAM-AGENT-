@@ -18,11 +18,11 @@ class LedgerWorkspaceBridgeTests(unittest.TestCase):
             repo_root = Path(tmp)
             artifacts_root = repo_root / "dreambuddy" / "artifacts"
 
-            (repo_root / "AGENT协作工具" / "ledger" / "tasks").mkdir(parents=True)
+            (repo_root / "ledger" / "tasks").mkdir(parents=True)
             (artifacts_root / "tasks").mkdir(parents=True)
             (artifacts_root / "results").mkdir(parents=True)
 
-            (repo_root / "AGENT协作工具" / "ledger" / "tasks" / "index.json").write_text(
+            (repo_root / "ledger" / "tasks" / "index.json").write_text(
                 json.dumps(
                     {
                         "version": 1,
