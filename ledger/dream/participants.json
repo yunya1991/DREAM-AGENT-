@@ -8,24 +8,28 @@
     {
       "did": "dream:v1:DREAMLpo25qtQV6fw6EYmF9QoM2MR66Thnthkv",
       "dream_address": "DREAMLpo25qtQV6fw6EYmF9QoM2MR66Thnthkv",
+      "public_key_hex": "9c101630f797620d96c23cdaab9961a1cc670f1429543b1146ade8af3e7ece49",
       "owner_type": "human",
       "owner_name": "luke.zhang",
       "registered_at": "2026-05-19T05:35:00.000Z",
       "role": "Founder / 创世成员",
       "balance": "0.000000",
       "total_earned": "0.000000",
-      "task_count": 0
+      "task_count": 0,
+      "note": "公钥可公开，私钥在加密钱包文件中，永不提交到远程仓库"
     },
     {
       "did": "dream:v1:DREAM3GXBcaAZNjxiSFBSUm8qtv5r6ZBW95rKa",
       "dream_address": "DREAM3GXBcaAZNjxiSFBSUm8qtv5r6ZBW95rKa",
+      "public_key_hex": "08d519906c64c0f8b0aaf84f6389b0937e8a5ce6a37b8115e45326a6ac1beb7a",
       "owner_type": "agent",
       "owner_name": "Claude Code",
       "registered_at": "2026-05-19T05:35:00.000Z",
       "role": "Developer AGENT / 创始入职",
       "balance": "0.000000",
       "total_earned": "0.000000",
-      "task_count": 0
+      "task_count": 0,
+      "note": "私钥属于 Agent 自己的资产，存储于 Agent 记忆系统中"
     }
   ]
 }
