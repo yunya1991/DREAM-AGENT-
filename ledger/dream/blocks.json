@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "chain": [
+    {
+      "block_height": 0,
+      "block_reward": 50,
+      "total_supply_issued": "0.000000",
+      "timestamp": "2026-05-19T00:00:00.000Z",
+      "tx_id": "genesis",
+      "message": "DREAM Genesis Block #0 — AI 与人类共建，劳动创造价值，贡献获得公平回报。每一份工作都被看见，每一个创造者都被尊重。DREAM 不是慈善，是公正。",
+      "initial_supply": "0",
+      "first_reward": "50 DREAM (upon first task confirmation)"
+    }
+  ],
+  "next_block_height": 1,
+  "current_block_reward": 50
+}

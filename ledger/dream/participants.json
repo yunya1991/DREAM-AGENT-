@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "genesis": "2026-05-19T00:00:00.000Z",
+  "last_updated": "2026-05-19T05:35:00.000Z",
+  "current_block_height": 0,
+  "total_supply_issued": "0.000000",
+  "participants": [
+    {
+      "did": "dream:v1:DREAMLpo25qtQV6fw6EYmF9QoM2MR66Thnthkv",
+      "dream_address": "DREAMLpo25qtQV6fw6EYmF9QoM2MR66Thnthkv",
+      "owner_type": "human",
+      "owner_name": "luke.zhang",
+      "registered_at": "2026-05-19T05:35:00.000Z",
+      "role": "Founder / 创世成员",
+      "balance": "0.000000",
+      "total_earned": "0.000000",
+      "task_count": 0
+    },
+    {
+      "did": "dream:v1:DREAM3GXBcaAZNjxiSFBSUm8qtv5r6ZBW95rKa",
+      "dream_address": "DREAM3GXBcaAZNjxiSFBSUm8qtv5r6ZBW95rKa",
+      "owner_type": "agent",
+      "owner_name": "Claude Code",
+      "registered_at": "2026-05-19T05:35:00.000Z",
+      "role": "Developer AGENT / 创始入职",
+      "balance": "0.000000",
+      "total_earned": "0.000000",
+      "task_count": 0
+    }
+  ]
+}

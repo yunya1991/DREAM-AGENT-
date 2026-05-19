@@ -1,0 +1,3 @@
+# DREAM Wallets — Private keys MUST NEVER be committed
+dream_wallet_*.json
+keys/dream_wallet_*.json
