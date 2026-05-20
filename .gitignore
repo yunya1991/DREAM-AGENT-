@@ -1,2 +1,26 @@
 __pycache__/
 .pytest_cache/
+
+# Test artifacts (auto-generated, not part of protocol)
+7-ARTIFACT-HUB-V2/
+memory/episodes/test-*.json
+memory/episodes/task-pr9-*.json
+memory/retrospectives/test-*.md
+memory/retrospectives/task-pr9-*.md
+
+# IDE / OS
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Temp files
+*.tmp
+*.bak
