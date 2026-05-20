@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { notify } from '../marketplace'
+import { notify } from '../../marketplace'
 import { mockBlocks } from '../data/blocks'
 
 export interface MiningActivity {
