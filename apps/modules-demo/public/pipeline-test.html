@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Pipeline Test</title>
+<style>body{font-family:monospace;padding:20px;background:#111;color:#0f0}
+.log{margin:4px 0;padding:4px 8px;border-left:3px solid #333}
+.pass{border-color:#22c55e;color:#22c55e}
+.fail{border-color:#ef4444;color:#ef4444}
+h1{color:#60a5fa}
+h2{color:#a78bfa;margin-top:20px}
+pre{background:#1a1a2e;padding:10px;border-radius:4px;overflow-x:auto}
+button{background:#2563eb;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:monospace}
+button:hover{background:#3b82f6}
+</style></head>
+<body>
+<h1>全链路 Pipeline 测试</h1>
+<button id="run">运行测试</button>
+<pre id="output"></pre>
+
+<script type="module">
+const out = document.getElementById('output')
+function log(msg, pass=true) {
+  const cls = pass ? 'pass' : 'fail'
+  out.innerHTML += `<div class="log ${cls}">${pass?'✅':'❌'} ${msg}</div>`
+}
+
+document.getElementById('run').onclick = async () => {
+  out.innerHTML = ''
+  log('=== Step 1: Import AIDrawer ===')
+  const { generateFromDescription, SCENE_PRESETS } = await import('/src/engine/AIDrawer.ts')
+  log(`SCENE_PRESETS loaded: ${SCENE_PRESETS.length} scenes`)
+
+  log('=== Step 2: Generate Disney Sketch ===')
+  const elements = await generateFromDescription('迪士尼乐园，小女孩，卡通人物')
+  log(`Generated ${elements.length} Excalidraw elements`)
+
+  log('=== Step 3: Parse Sketch ===')
+  const { parseSketch } = await import('/src/engine/SketchParser.ts')
+  const skeleton = parseSketch(elements)
+  log(`textLabels: ${skeleton.textLabels.map(t=>t.text).join(', ') || '(none)'}`)
+  log(`topLevel elements: ${skeleton.topLevel.length}`)
+
+  log('=== Step 4: Infer Intent with Purpose ===')
+  const { inferIntent, extractKeywords } = await import('/src/engine/IntentEngine.ts')
+  const purpose = '做一个简短高级动画，女孩去到了自己心仪迪士尼乐园，还看到很多卡通人物打招呼，看到晚上迪士尼烟花'
+  const modules = inferIntent(skeleton, '迪士尼乐园，小女孩，卡通人物', purpose)
+  const keywords = extractKeywords(skeleton, purpose)
+  log(`Modules: ${modules.map(m=>m.label).join(', ')}`)
+  log(`Keywords: ${keywords.join(', ')}`)
+  modules.forEach(m => log(`  → ${m.label} (${m.module}) conf=${(m.confidence*100).toFixed(0)}% evidence="${m.evidence[0]}"`))
+
+  log('=== Step 5: Confidence Score ===')
+  const { computeConfidence } = await import('/src/engine/ConfidenceScorer.ts')
+  const scores = computeConfidence(skeleton, modules.length, keywords.length > 0)
+  log(`Overall: ${scores.overall}% (coverage=${scores.signalCoverage}%, keyword=${scores.keywordMatch}%, struct=${scores.structuralCompleteness}%, order=${scores.drawOrderliness}%)`)
+
+  log('=== Step 6: Generate Tasks ===')
+  const { inferenceToTasks } = await import('/src/engine/adapter.ts')
+  const tasks = inferenceToTasks(modules, '自定义', purpose)
+  log(`Tasks: ${tasks.length}`, tasks.length > 0)
+  tasks.forEach(t => log(`  → ${t.label} [${t.proposer}]`))
+
+  log('=== Step 7: Broadcast to IndexedDB ===')
+  try {
+    const req = indexedDB.open('dream-tasks-db', 1)
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result
+      if (!db.objectStoreNames.contains('tasks')) db.createObjectStore('tasks', {keyPath:'key'})
+    }
+    req.onsuccess = (e) => {
+      const db = e.target.result
+      const tx = db.transaction('tasks', 'readwrite')
+      tx.objectStore('tasks').put({key:'latest', tasks, timestamp: Date.now()})
+      tx.oncomplete = () => {
+        log(`IndexedDB write complete: ${tasks.length} tasks`)
+        db.close()
+      }
+      tx.onerror = () => log(`IndexedDB write FAILED`, false)
+    }
+    req.onerror = () => log(`IndexedDB open FAILED`, false)
+  } catch(err) {
+    log(`Broadcast error: ${err.message}`, false)
+  }
+
+  // Read back immediately
+  setTimeout(() => {
+    const req = indexedDB.open('dream-tasks-db', 1)
+    req.onsuccess = (e) => {
+      const db = e.target.result
+      const tx = db.transaction('tasks', 'readonly')
+      const r = tx.objectStore('tasks').get('latest')
+      r.onsuccess = () => {
+        const val = r.result
+        log(`Read back: ${val?.tasks?.length || 0} tasks @ ${val?.timestamp}`, val?.tasks?.length > 0)
+        db.close()
+      }
+    }
+  }, 100)
+
+  log('=== Step 8: Check mining-frontend ===')
+  log('打开 http://localhost:5174/ 切到"画版任务"tab 应看到任务')
+
+  log('=== 测试完成 ===')
+}
+</script>
+</body>
+</html>

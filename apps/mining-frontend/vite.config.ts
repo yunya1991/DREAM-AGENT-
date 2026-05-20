@@ -15,5 +15,12 @@ export default defineConfig({
   },
   server: {
     port: 5174,
+    proxy: {
+      '/artifacts': {
+        target: 'http://localhost:5173',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/artifacts/, '/api/artifacts'),
+      },
+    },
   },
 })

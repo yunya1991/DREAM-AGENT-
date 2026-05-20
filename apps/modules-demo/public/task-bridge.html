@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Task Bridge</title></head>
+<body>
+<script>
+/** Reads tasks from IndexedDB, posts to parent when data is NEW. Uses localStorage to survive HMR reload. */
+let lastHash = localStorage.getItem('bridge-last-hash') || ''
+function taskHash(tasks) {
+  return tasks.map(t => t.id).sort().join(',')
+}
+function checkAndPost() {
+  const req = indexedDB.open('dream-tasks-db', 1)
+  req.onupgradeneeded = (e) => {
+    const db = e.target.result
+    if (!db.objectStoreNames.contains('tasks')) db.createObjectStore('tasks', {keyPath:'key'})
+  }
+  req.onsuccess = (e) => {
+    const db = e.target.result
+    const tx = db.transaction('tasks','readonly')
+    const r = tx.objectStore('tasks').get('latest')
+    r.onsuccess = () => {
+      try {
+        if (r.result && r.result.tasks && r.result.tasks.length > 0) {
+          const h = taskHash(r.result.tasks)
+          if (h !== lastHash) {
+            lastHash = h
+            localStorage.setItem('bridge-last-hash', h)
+            console.log('[bridge] sending', r.result.tasks.length, 'tasks')
+            window.parent.postMessage({ type:'tasks-from-bridge', tasks: r.result.tasks, timestamp: Date.now() }, '*')
+          }
+        }
+      } finally { db.close() }
+    }
+    r.onerror = () => { try { db.close() } catch(e){} }
+  }
+  req.onerror = () => {}
+}
+setInterval(checkAndPost, 2000)
+checkAndPost()
+</script>
+</body>
+</html>
+
