@@ -265,9 +265,24 @@ created_at: {created_at}
     return index_content
 
 
-def load_file_registry(root_dir):
-    """Load or create file-registry.json."""
-    registry_path = os.path.join(root_dir, "docs", "file-registry.json")
+def find_project_root(start_dir):
+    """Find project root by locating docs/file-registry.json."""
+    p = os.path.abspath(start_dir)
+    for _ in range(10):
+        candidate = os.path.join(p, "docs", "file-registry.json")
+        if os.path.exists(candidate):
+            return os.path.dirname(os.path.dirname(candidate))
+        parent = os.path.dirname(p)
+        if parent == p:
+            break
+        p = parent
+    return start_dir
+
+
+def load_file_registry(workspace_path):
+    """Load or create file-registry.json from project root."""
+    project_root = find_project_root(workspace_path)
+    registry_path = os.path.join(project_root, "docs", "file-registry.json")
     if os.path.exists(registry_path):
         with open(registry_path, "r", encoding="utf-8") as f:
             return json.load(f), registry_path
@@ -317,10 +332,16 @@ def decompose_module(module_name, pages_file, contract_file, workspace, dry_run=
 
     # Determine workspace root for path resolution
     root_dir = os.getcwd()
-    if os.path.exists(os.path.join(root_dir, workspace)):
-        root_dir = os.path.join(root_dir, workspace)
+    workspace_path = os.path.join(root_dir, workspace)
+    if os.path.exists(workspace_path):
+        root_dir = workspace_path
+    elif "/" in workspace:
+        # Multi-level path like "7-ARTIFACT-HUB-V2/sub"
+        root_dir = os.path.join(root_dir, os.path.dirname(workspace))
     else:
-        root_dir = os.path.join(root_dir, os.path.dirname(workspace)) if workspace else os.getcwd()
+        # Workspace doesn't exist yet — create it
+        os.makedirs(workspace_path, exist_ok=True)
+        root_dir = workspace_path
 
     # Create module folder structure
     module_dir = os.path.join(root_dir, "modules", module_name)

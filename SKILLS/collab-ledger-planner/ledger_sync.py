@@ -216,7 +216,7 @@ def generate_block_structure(repo_root, workspace, tasks, dry_run=False):
 
         if dry_run:
             print(f"  [DRY-RUN] Would create module: modules/{module_name}/ ({len(module_tasks)} blocks)", file=sys.stderr)
-            results[module_name] = {"tasks": len(module_tasks), "dry_run": True}
+            results[module_name] = {"tasks": len(module_tasks), "dry_run": True, "total_tasks": len(module_tasks)}
             continue
 
         os.makedirs(tasks_dir, exist_ok=True)
@@ -338,10 +338,12 @@ created_at: {created_at}
         registry = json.loads(registry_path.read_text(encoding="utf-8"))
         registry.setdefault("modules", {})
         for mod_name, mod_data in results.items():
+            if mod_data.get("dry_run"):
+                continue  # Skip dry-run entries
             registry["modules"][mod_name] = {
                 "index": mod_data.get("index_path", f"{workspace}/modules/{mod_name}/INDEX.md"),
                 "phase_d_contract": f"{workspace}/modules/{mod_name}/contracts/",
-                "total_tasks": mod_data["total_tasks"],
+                "total_tasks": mod_data.get("total_tasks", 0),
                 "status": "ready",
             }
         registry["generated_at"] = datetime.now(timezone.utc).isoformat()
