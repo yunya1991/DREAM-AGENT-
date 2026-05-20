@@ -1,0 +1,46 @@
+/* Dashboard Widget Styles */
+
+/* Widget Card Hover Effect */
+.dashboard-widget {
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.dashboard-widget:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Theme Variables */
+:root.dark {
+  --bg-primary: #111827;
+  --bg-secondary: #1f2937;
+  --bg-card: #1f2937;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --border-color: #374151;
+  --accent-color: #3b82f6;
+}
+
+:root:not(.dark) {
+  --bg-primary: #f9fafb;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --accent-color: #2563eb;
+}
+
+/* Skeleton Animation */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  background-color: #e5e7eb;
+}
+
+.dark .animate-skeleton {
+  background-color: #374151;
+}

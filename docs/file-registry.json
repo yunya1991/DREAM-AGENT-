@@ -407,5 +407,60 @@
       "description": "Verify file headers across the project"
     }
   ],
-  "modules": {}
+  "modules": {
+    "modules-marketplace": {
+      "modules": {
+        "dashboard": {
+          "id": "dashboard",
+          "path": "modules-marketplace/dashboard/",
+          "type": "reusable-module",
+          "framework": "react + typescript",
+          "ui_library": "tailwind",
+          "quality_score": 92,
+          "status": "ready",
+          "last_updated": "2026-05-20"
+        },
+        "quote-panel": {
+          "id": "quote-panel",
+          "path": "modules-marketplace/quote-panel/",
+          "type": "reusable-module",
+          "framework": "react + typescript",
+          "ui_library": "tailwind",
+          "quality_score": 90,
+          "status": "ready",
+          "last_updated": "2026-05-20"
+        },
+        "data-table": {
+          "id": "data-table",
+          "path": "modules-marketplace/data-table/",
+          "type": "reusable-module",
+          "framework": "react + typescript",
+          "ui_library": "tailwind",
+          "quality_score": 88,
+          "status": "ready",
+          "last_updated": "2026-05-20"
+        },
+        "file-manager": {
+          "id": "file-manager",
+          "path": "modules-marketplace/file-manager/",
+          "type": "reusable-module",
+          "framework": "react + typescript",
+          "ui_library": "tailwind",
+          "quality_score": 89,
+          "status": "ready",
+          "last_updated": "2026-05-20"
+        },
+        "notification": {
+          "id": "notification",
+          "path": "modules-marketplace/notification/",
+          "type": "reusable-module",
+          "framework": "react + typescript",
+          "ui_library": "tailwind",
+          "quality_score": 91,
+          "status": "ready",
+          "last_updated": "2026-05-20"
+        }
+      }
+    }
+  }
 }
