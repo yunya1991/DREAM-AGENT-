@@ -1,3 +1,13 @@
+---
+id: LIFECYCLE-IMPL
+type: plan
+owner: ledger-protocol-agent
+depends:
+  - LIFECYCLE-DESIGN
+version: 1
+last_verified: 2026-05-20
+---
+
 # Agent Standard Dev Lifecycle Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
@@ -6,7 +16,7 @@
 
 **Architecture:** 先把规则源头固化为仓库内文档和模板，再用监督规则与 Python 校验脚本把流程结构化，最后将 GitHub Actions 接到 PR 入口上做 fail-closed 检查。现有 `dual-agent-conflict-gate` 保留，作为 `agent-dev-execution` 的开工前子门禁，而不是重写全部协作规则。
 
-**Tech Stack:** Markdown, JSON, Python 3 standard library, GitHub Actions YAML, existing `AGENT协作工具`, `AGENT协作工具/docs`, and `docs/superpowers/templates` layout.
+**Tech Stack:** Markdown, JSON, Python 3 standard library, GitHub Actions YAML, existing `AGENT协作工具`, `docs`, and `docs/superpowers/templates` layout.
 
 说明：本文档中的文件路径以“仓库相对路径”为准；历史遗留的绝对路径示例不再作为规范。
 
@@ -15,29 +25,29 @@
 ## Repository Layout Changes
 
 **Create**
-- `AGENT协作工具/SKILLS/agent-standard-dev-lifecycle/SKILL.md`
-- `AGENT协作工具/SKILLS/agent-design-review/SKILL.md`
-- `AGENT协作工具/SKILLS/agent-dev-execution/SKILL.md`
-- `AGENT协作工具/SKILLS/agent-quality-test/SKILL.md`
-- `AGENT协作工具/SKILLS/agent-collab-supervisor/SKILL.md`
-- `AGENT协作工具/SKILLS/agent-collab-supervisor/rules.json`
-- `AGENT协作工具/templates/pr-comment-started.md`
-- `AGENT协作工具/templates/pr-comment-updated.md`
-- `AGENT协作工具/templates/pr-comment-blocked.md`
-- `AGENT协作工具/templates/pr-comment-done.md`
-- `AGENT协作工具/templates/design-review-comment.md`
-- `AGENT协作工具/templates/test-report-comment.md`
-- `AGENT协作工具/github-actions/README.md`
-- `AGENT协作工具/github-actions/check_agent_lifecycle.py`
-- `AGENT协作工具/github-actions/tests/test_check_agent_lifecycle.py`
+- `SKILLS/agent-standard-dev-lifecycle/SKILL.md`
+- `SKILLS/agent-design-review/SKILL.md`
+- `SKILLS/agent-dev-execution/SKILL.md`
+- `SKILLS/agent-quality-test/SKILL.md`
+- `SKILLS/agent-collab-supervisor/SKILL.md`
+- `SKILLS/agent-collab-supervisor/rules.json`
+- `templates/pr-comment-started.md`
+- `templates/pr-comment-updated.md`
+- `templates/pr-comment-blocked.md`
+- `templates/pr-comment-done.md`
+- `templates/design-review-comment.md`
+- `templates/test-report-comment.md`
+- `github-actions/README.md`
+- `github-actions/check_agent_lifecycle.py`
+- `github-actions/tests/test_check_agent_lifecycle.py`
 - `.github/workflows/agent-lifecycle-guard.yml`
 - `.github/pull_request_template.md`
 
 **Modify**
-- `AGENT协作工具/README.md`
-- `AGENT协作工具/docs/README.md`
-- `AGENT协作工具/docs/agent-standard-dev-lifecycle-design.md`
-- `AGENT协作工具/docs/agent-standard-dev-lifecycle-implementation-plan.md`
+- `README.md`
+- `docs/README.md`
+- `docs/agent-standard-dev-lifecycle-design.md`
+- `docs/agent-standard-dev-lifecycle-implementation-plan.md`
 - `docs/superpowers/templates/agent-task-card.md`
 
 ---
@@ -46,7 +56,7 @@
 
 Before any task work begins, the assigned agent must:
 
-1. Run `AGENT协作工具/SKILLS/dual-agent-conflict-gate/conflict_gate.py`
+1. Run `SKILLS/dual-agent-conflict-gate/conflict_gate.py`
 2. If the result is `SAFE` or `WARNING`, post a `STARTED` PR comment before editing files
 3. If scope changes, post an `UPDATED` comment
 4. If the task is blocked, post a `BLOCKED` comment
@@ -74,19 +84,19 @@ Recommended defaults:
 
 Reference document:
 
-- `AGENT协作工具/docs/agent-efficient-collaboration-mode.md`
+- `docs/agent-efficient-collaboration-mode.md`
 
 ---
 
 ### Task 1: Expand the collaboration entrypoints
 
 **Files:**
-- Modify: `AGENT协作工具/README.md`
+- Modify: `README.md`
 - Modify: `docs/superpowers/templates/agent-task-card.md`
 
 - [ ] **Step 1: Update the main collaboration README with the lifecycle stack**
 
-Insert the following sections after `## 目录结构` in `AGENT协作工具/README.md`:
+Insert the following sections after `## 目录结构` in `README.md`:
 
 ```md
 ## 生命周期工具栈
@@ -181,7 +191,7 @@ Replace the existing template content in `docs/superpowers/templates/agent-task-
 Run:
 
 ```bash
-grep -n "agent-standard-dev-lifecycle\\|Phase 0\\|Phase 8" AGENT协作工具/README.md
+grep -n "agent-standard-dev-lifecycle\\|Phase 0\\|Phase 8" README.md
 grep -n "Lifecycle Evidence\\|Supervision passed" docs/superpowers/templates/agent-task-card.md
 ```
 
@@ -195,7 +205,7 @@ agent-task-card.md contains "## Lifecycle Evidence" and "Supervision passed"
 - [ ] **Step 4: Commit the entrypoint updates**
 
 ```bash
-git add AGENT协作工具/README.md docs/superpowers/templates/agent-task-card.md
+git add README.md docs/superpowers/templates/agent-task-card.md
 git commit -m "docs(collaboration): expand lifecycle entrypoints"
 ```
 
@@ -204,12 +214,12 @@ git commit -m "docs(collaboration): expand lifecycle entrypoints"
 ### Task 2: Add reusable PR and review templates
 
 **Files:**
-- Create: `AGENT协作工具/templates/pr-comment-started.md`
-- Create: `AGENT协作工具/templates/pr-comment-updated.md`
-- Create: `AGENT协作工具/templates/pr-comment-blocked.md`
-- Create: `AGENT协作工具/templates/pr-comment-done.md`
-- Create: `AGENT协作工具/templates/design-review-comment.md`
-- Create: `AGENT协作工具/templates/test-report-comment.md`
+- Create: `templates/pr-comment-started.md`
+- Create: `templates/pr-comment-updated.md`
+- Create: `templates/pr-comment-blocked.md`
+- Create: `templates/pr-comment-done.md`
+- Create: `templates/design-review-comment.md`
+- Create: `templates/test-report-comment.md`
 
 - [ ] **Step 1: Create the `STARTED` and `UPDATED` templates**
 
@@ -371,7 +381,7 @@ Evidence:
 Run:
 
 ```bash
-find /Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/templates -maxdepth 1 -type f | sort
+find /Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/templates -maxdepth 1 -type f | sort
 ```
 
 Expected:
@@ -388,7 +398,7 @@ Expected:
 - [ ] **Step 5: Commit the templates**
 
 ```bash
-git add AGENT协作工具/templates
+git add templates
 git commit -m "docs(collaboration): add lifecycle comment templates"
 ```
 
@@ -397,11 +407,11 @@ git commit -m "docs(collaboration): add lifecycle comment templates"
 ### Task 3: Create the master SKILL and four sub-skill docs
 
 **Files:**
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/agent-standard-dev-lifecycle/SKILL.md`
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/agent-design-review/SKILL.md`
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/agent-dev-execution/SKILL.md`
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/agent-quality-test/SKILL.md`
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/agent-collab-supervisor/SKILL.md`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/agent-standard-dev-lifecycle/SKILL.md`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/agent-design-review/SKILL.md`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/agent-dev-execution/SKILL.md`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/agent-quality-test/SKILL.md`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/agent-collab-supervisor/SKILL.md`
 
 - [ ] **Step 1: Create the master lifecycle SKILL**
 
@@ -565,7 +575,7 @@ status: "draft"
 Run:
 
 ```bash
-find /Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS -maxdepth 2 -name SKILL.md | sort
+find /Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS -maxdepth 2 -name SKILL.md | sort
 ```
 
 Expected:
@@ -582,7 +592,7 @@ Expected:
 - [ ] **Step 5: Commit the SKILL docs**
 
 ```bash
-git add AGENT协作工具/SKILLS/agent-standard-dev-lifecycle AGENT协作工具/SKILLS/agent-design-review AGENT协作工具/SKILLS/agent-dev-execution AGENT协作工具/SKILLS/agent-quality-test AGENT协作工具/SKILLS/agent-collab-supervisor
+git add SKILLS/agent-standard-dev-lifecycle SKILLS/agent-design-review SKILLS/agent-dev-execution SKILLS/agent-quality-test SKILLS/agent-collab-supervisor
 git commit -m "docs(collaboration): add lifecycle skill docs"
 ```
 
@@ -591,7 +601,7 @@ git commit -m "docs(collaboration): add lifecycle skill docs"
 ### Task 4: Add the supervisor rule catalog
 
 **Files:**
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/agent-collab-supervisor/rules.json`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/agent-collab-supervisor/rules.json`
 
 - [ ] **Step 1: Create the rule catalog JSON**
 
@@ -660,7 +670,7 @@ Create `rules.json`:
 Run:
 
 ```bash
-python3 -m json.tool /Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/agent-collab-supervisor/rules.json >/dev/null
+python3 -m json.tool /Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/agent-collab-supervisor/rules.json >/dev/null
 ```
 
 Expected: no output and exit code `0`.
@@ -668,7 +678,7 @@ Expected: no output and exit code `0`.
 - [ ] **Step 3: Commit the rule catalog**
 
 ```bash
-git add AGENT协作工具/SKILLS/agent-collab-supervisor/rules.json
+git add SKILLS/agent-collab-supervisor/rules.json
 git commit -m "docs(collaboration): add supervisor rule catalog"
 ```
 
@@ -677,9 +687,9 @@ git commit -m "docs(collaboration): add supervisor rule catalog"
 ### Task 5: Implement and test the lifecycle checker script
 
 **Files:**
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/check_agent_lifecycle.py`
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/tests/test_check_agent_lifecycle.py`
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/README.md`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/check_agent_lifecycle.py`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/tests/test_check_agent_lifecycle.py`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/README.md`
 
 - [ ] **Step 1: Write the failing tests first**
 
@@ -760,7 +770,7 @@ if __name__ == "__main__":
 Run:
 
 ```bash
-python3 -m unittest discover -s "/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/tests" -p "test_*.py"
+python3 -m unittest discover -s "/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/tests" -p "test_*.py"
 ```
 
 Expected: `FAILED` because `check_agent_lifecycle.py` does not exist yet.
@@ -837,7 +847,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Create `AGENT协作工具/github-actions/README.md`:
+Create `github-actions/README.md`:
 
 ```md
 # Agent Lifecycle Guard
@@ -867,7 +877,7 @@ Create `AGENT协作工具/github-actions/README.md`:
 Run:
 
 ```bash
-python3 -m unittest discover -s "/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/tests" -p "test_*.py"
+python3 -m unittest discover -s "/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/tests" -p "test_*.py"
 ```
 
 Expected:
@@ -883,7 +893,7 @@ OK
 - [ ] **Step 5: Commit the checker implementation**
 
 ```bash
-git add AGENT协作工具/github-actions
+git add github-actions
 git commit -m "feat(collaboration): add lifecycle checker script"
 ```
 
@@ -1019,7 +1029,7 @@ jobs:
             fs.writeFileSync("agent_lifecycle_payload.json", JSON.stringify(result, null, 2));
 
       - name: Run lifecycle checker
-        run: python3 "AGENT协作工具/github-actions/check_agent_lifecycle.py" agent_lifecycle_payload.json
+        run: python3 "github-actions/check_agent_lifecycle.py" agent_lifecycle_payload.json
 ```
 
 - [ ] **Step 3: Validate the workflow YAML**

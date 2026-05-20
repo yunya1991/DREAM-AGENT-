@@ -1,8 +1,17 @@
+---
+id: 00-AGENT-CONSTITUTION
+type: constitution
+owner: ledger-protocol-agent
+depends: []
+version: 3
+last_verified: 2026-05-20
+---
+
 # AGENT Collaboration Constitution (Fail-Closed)
 
 > Status: active  
 > Scope: dreambuddy-v1 repository collaboration  
-> Source of truth: `AGENT协作工具/docs/*`
+> Source of truth: `docs/*`
 
 ## 0. Purpose
 
@@ -10,7 +19,7 @@ This constitution defines the non-negotiable collaboration rules for all AGENTs 
 
 ## 1. Source of Truth
 
-- Collaboration documentation source of truth lives in `AGENT协作工具/docs/`.
+- Collaboration documentation source of truth lives in `docs/`.
 - Legacy documents may exist elsewhere; when inconsistent, this constitution wins.
 
 ## 2. Roles (Behavior-Defined)
@@ -31,6 +40,18 @@ This constitution defines the non-negotiable collaboration rules for all AGENTs 
 
 An AGENT PR MUST satisfy all of the following:
 
+### 4.1 分解线前置条件（UI-Driven Flow）
+
+- Comments include decomposition anchors (all six steps, in order, no skip):
+  - `[技术文档 / TECHNICAL_SPEC]`
+  - `[架构评审 / ARCHITECTURE_REVIEW]`
+  - `[前端页面定义 / FRONTEND_PAGES]`
+  - `[模块契约 / MODULE_CONTRACT]`
+  - `[协作清单 / COLLAB_CHECKLIST]`
+  - `[验收标准 / ACCEPTANCE_CRITERIA]`
+
+### 4.2 执行线门禁
+
 - PR body includes required fields (task card, owner agent, shared file declaration).
 - Comments include required anchors:
   - `[方案评审记录 / DESIGN_REVIEW]` (must include `Reviewer:`)
@@ -49,9 +70,9 @@ An AGENT PR MUST satisfy all of the following:
 
 - Ledger/Protocol AGENT MUST NOT modify:
   - `.github/workflows/**`
-  - `AGENT协作工具/github-actions/**`
-  - `AGENT协作工具/SKILLS/**` (except purely documentary text that does not change behavior)
-- Governance AGENT MUST NOT “fix gates” by directly editing `AGENT协作工具/ledger/**`.
+  - `github-actions/**`
+  - `SKILLS/**` (except purely documentary text that does not change behavior)
+- Governance AGENT MUST NOT “fix gates” by directly editing `ledger/**`.
 
 ## 7. Conflict Resolution Priority
 
@@ -68,3 +89,69 @@ An AGENT PR MUST satisfy all of the following:
 - “Which file should I edit?”: `04-ENGINEERING-INDEX.md`
 - Automation/CI/ledger issues: `05-FAQ.md`
 - “Which SKILL should I call?”: `06-SKILLS-INVENTORY.md`
+
+## 9. Memory and Learning (记忆与学习)
+
+This system does not merely execute tasks — it learns from every execution.
+The memory system is a constitutional requirement, not an optional feature.
+
+### 9.1 Mandatory Retrospective (强制复盘)
+
+Every task completion (Phase 8 archived) triggers an automatic retrospective.
+This is non-negotiable. The retrospective:
+- Records what happened (experience memory)
+- Extracts lessons from failures (lesson memory)
+- Updates the proven optimal path (path memory)
+- Checks constitutional values (value memory)
+
+### 9.2 Pre-Flight Memory Lookup (飞行前查找)
+
+Before starting any task, the executing agent MUST consult the memory system:
+- Check for relevant lessons to avoid repeating mistakes
+- Check for optimal paths to follow the proven shortest approach
+- Check for known patterns that apply to the current context
+
+This is equivalent in priority to the conflict gate requirement:
+**no memory lookup, no task start.**
+
+### 9.3 Customer-First as Hard Constraint (客户至上硬约束)
+
+Every retrospective runs the value check (V1-V5) from `memory/values/constitution.md`.
+If any value is violated:
+- The episode is flagged
+- A governance review task is created
+- The violation is recorded in the task ledger
+
+This ensures “our company serves customers, not tortures or exploits them” is
+enforced at the system level, not merely aspirational.
+
+### 9.4 Continuous Evolution (持续进化)
+
+The system measures itself:
+- Success rate per task type
+- Rework cycle trends
+- Path efficiency improvements
+- Recurring failure patterns
+
+When metrics cross thresholds (defined in `memory/metrics/evolution.json`),
+the system automatically proposes improvements to the appropriate AGENT role.
+This is how the system gets better without manual intervention.
+
+### 9.5 Memory as Source of Truth (记忆即真源)
+
+The memory system is a source of truth equal to the ledger. When memory says
+“this approach failed 3 times,” that is as authoritative as a gate rule.
+**Ignoring memory warnings is equivalent to ignoring conflict gate BLOCK results.**
+
+### 9.6 Goal-Driven Path Selection (目标导向路径选择)
+
+We are goal-oriented, not path-prescribing. The only criterion for path selection is:
+under conventional engineering practice, choose the **best, optimal, shortest** delivery path.
+No cutting corners, no shortcuts, no technical debt.
+
+- **Best** (最佳): sound architecture, maintainable, extensible, compatible
+- **Optimal** (最优): highest quality score, fewest rework cycles, lowest risk
+- **Shortest** (最短): minimum steps and time, given Best and Optimal are satisfied
+
+The path optimizer recommends but does not mandate. Agents may deviate with documented reasoning.
+The retrospective engine automatically compares actual vs recommended path efficiency.

@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "id": "environment_pitfall",
+      "name": "环境陷阱",
+      "description": "操作系统、运行环境、工具链差异导致的失败",
+      "example": "Windows bash heredoc 引号处理与 Linux 不同"
+    },
+    {
+      "id": "scope_creep",
+      "name": "范围蔓延",
+      "description": "任务边界被隐式扩大，导致返工或偏离目标",
+      "example": "修复一个导出问题演变成模块重构"
+    },
+    {
+      "id": "contract_violation",
+      "name": "契约违反",
+      "description": "模块间数据格式、接口约定被破坏",
+      "example": "修改了 frozen contract 中的响应字段"
+    },
+    {
+      "id": "dependency_gap",
+      "name": "依赖缺口",
+      "description": "未声明的依赖导致构建或运行失败",
+      "example": "缺少 package.json 中的依赖声明"
+    },
+    {
+      "id": "pattern_mismatch",
+      "name": "模式不匹配",
+      "description": "执行模式选择不当（该 STRONG_SYNC 却用了 PHASE_BROADCAST）",
+      "example": "修改共享 types.ts 时未触发 STRONG_SYNC"
+    }
+  ]
+}

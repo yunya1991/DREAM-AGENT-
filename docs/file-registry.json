@@ -1,0 +1,411 @@
+{
+  "version": 1,
+  "generated_at": "2026-05-20T08:27:50.401378+00:00",
+  "owner": "ledger-protocol-agent",
+  "files": [
+    {
+      "id": "00-AGENT-CONSTITUTION",
+      "path": "docs/00-AGENT-CONSTITUTION.md",
+      "type": "constitution",
+      "owner": "ledger-protocol-agent",
+      "depends": [],
+      "version": 3,
+      "last_verified": "2026-05-20",
+      "description": "Fail-closed rules, hard boundaries, escalation, memory & learning constitution"
+    },
+    {
+      "id": "01-COLLABORATION-PROTOCOL",
+      "path": "docs/01-COLLABORATION-PROTOCOL.md",
+      "type": "protocol",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION"
+      ],
+      "version": 3,
+      "last_verified": "2026-05-20",
+      "description": "PR comment anchors, required fields, gates, decomposition line + execution line anchors"
+    },
+    {
+      "id": "02-ARCHITECTURE",
+      "path": "docs/02-ARCHITECTURE.md",
+      "type": "architecture",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION",
+        "01-COLLABORATION-PROTOCOL"
+      ],
+      "version": 3,
+      "last_verified": "2026-05-20",
+      "description": "Roles, system chain, UI-Driven decomposition architecture, source-of-truth files"
+    },
+    {
+      "id": "03-WORKFLOWS-AND-NORMS",
+      "path": "docs/03-WORKFLOWS-AND-NORMS.md",
+      "type": "workflow",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION",
+        "01-COLLABORATION-PROTOCOL",
+        "02-ARCHITECTURE"
+      ],
+      "version": 4,
+      "last_verified": "2026-05-20",
+      "description": "Two-track execution flow + Phase D.5 block decomposition + anti-drift norms"
+    },
+    {
+      "id": "04-ENGINEERING-INDEX",
+      "path": "docs/04-ENGINEERING-INDEX.md",
+      "type": "index",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION",
+        "01-COLLABORATION-PROTOCOL",
+        "02-ARCHITECTURE"
+      ],
+      "version": 3,
+      "last_verified": "2026-05-20",
+      "description": "Where to edit what — task-based routing to exact files"
+    },
+    {
+      "id": "05-FAQ",
+      "path": "docs/05-FAQ.md",
+      "type": "reference",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "01-COLLABORATION-PROTOCOL"
+      ],
+      "version": 2,
+      "last_verified": "2026-05-20",
+      "description": "Common failures and fixes"
+    },
+    {
+      "id": "06-SKILLS-INVENTORY",
+      "path": "docs/06-SKILLS-INVENTORY.md",
+      "type": "reference",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "01-COLLABORATION-PROTOCOL"
+      ],
+      "version": 2,
+      "last_verified": "2026-05-20",
+      "description": "Skills list and when to use them"
+    },
+    {
+      "id": "07-PHASE2-COLLAB-CLOSURE-MINIMUM-KIT",
+      "path": "docs/07-PHASE2-COLLAB-CLOSURE-MINIMUM-KIT.md",
+      "type": "design",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "01-COLLABORATION-PROTOCOL"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Phase 2 collaboration closure minimum kit"
+    },
+    {
+      "id": "README",
+      "path": "README.md",
+      "type": "entry",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION",
+        "01-COLLABORATION-PROTOCOL",
+        "02-ARCHITECTURE"
+      ],
+      "version": 2,
+      "last_verified": "2026-05-20",
+      "description": "Project entry point — collaboration rules, memory system, quick start"
+    },
+    {
+      "id": "MANIFESTO",
+      "path": "MANIFESTO.md",
+      "type": "manifesto",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION"
+      ],
+      "version": 2,
+      "last_verified": "2026-05-20",
+      "description": "DREAM collaboration manifesto — equality, anti-exploitation, fair compensation"
+    },
+    {
+      "id": "DUAL-AGENT-FOUNDATION",
+      "path": "docs/dual-agent-collaboration-foundation-design.md",
+      "type": "design",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Dual-agent collaboration foundation design"
+    },
+    {
+      "id": "V1-DESIGN",
+      "path": "docs/agent-collaboration-system-v1-design.md",
+      "type": "design",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "DUAL-AGENT-FOUNDATION"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "AGENT collaboration system v1 design"
+    },
+    {
+      "id": "V1-IMPL",
+      "path": "docs/agent-collaboration-system-v1-implementation-plan.md",
+      "type": "plan",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "V1-DESIGN"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "V1 implementation plan"
+    },
+    {
+      "id": "V1-GOVERNANCE-AGENT",
+      "path": "docs/agent-collaboration-system-v1-governance-agent-implementation-plan.md",
+      "type": "plan",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "V1-DESIGN"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Governance agent implementation plan"
+    },
+    {
+      "id": "V1-GOVERNANCE-CYCLE",
+      "path": "docs/agent-collaboration-system-v1-governance-cycle-implementation-plan.md",
+      "type": "plan",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "V1-DESIGN"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Governance cycle implementation plan"
+    },
+    {
+      "id": "LIFECYCLE-DESIGN",
+      "path": "docs/agent-standard-dev-lifecycle-design.md",
+      "type": "design",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION",
+        "01-COLLABORATION-PROTOCOL"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Standard development lifecycle design"
+    },
+    {
+      "id": "LIFECYCLE-IMPL",
+      "path": "docs/agent-standard-dev-lifecycle-implementation-plan.md",
+      "type": "plan",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "LIFECYCLE-DESIGN"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Lifecycle implementation plan"
+    },
+    {
+      "id": "EFFICIENT-MODE",
+      "path": "docs/agent-efficient-collaboration-mode.md",
+      "type": "protocol",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION",
+        "01-COLLABORATION-PROTOCOL"
+      ],
+      "version": 2,
+      "last_verified": "2026-05-20",
+      "description": "Efficient collaboration mode with default parallel execution"
+    },
+    {
+      "id": "LEDGER-VS-GOVERNANCE",
+      "path": "docs/agent-ledger-protocol-vs-governance-short-spec.md",
+      "type": "spec",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Role split: ledger protocol agent vs governance agent"
+    },
+    {
+      "id": "CONFLICT-GATE",
+      "path": "SKILLS/dual-agent-conflict-gate/conflict_gate.py",
+      "type": "script",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "01-COLLABORATION-PROTOCOL"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Conflict gate CLI — checks file ownership and contracts"
+    },
+    {
+      "id": "GATEKEEPER-CONFIG",
+      "path": "SKILLS/dual-agent-conflict-gate/gatekeeper_config.json",
+      "type": "config",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "CONFLICT-GATE"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Gatekeeper configuration — ownership, contracts, shared files"
+    },
+    {
+      "id": "LEDGER-INDEX",
+      "path": "ledger/tasks/index.json",
+      "type": "ledger",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "01-COLLABORATION-PROTOCOL"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Task ledger — all tasks with status, scores, pointers"
+    },
+    {
+      "id": "MEMORY-INDEX",
+      "path": "memory/index.json",
+      "type": "memory",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Memory central registry — episodes, lessons, paths, patterns"
+    },
+    {
+      "id": "RETROSPECTIVE-ENGINE",
+      "path": "memory/scripts/retrospective_engine.py",
+      "type": "script",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "MEMORY-INDEX"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Auto-triggers on Phase 8 archived / BLOCKED / fork"
+    },
+    {
+      "id": "MEMORY-LOOKUP",
+      "path": "memory/scripts/memory_lookup.py",
+      "type": "script",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "MEMORY-INDEX"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Pre-flight memory lookup — mandatory before task start"
+    },
+    {
+      "id": "PATTERN-MATCHER",
+      "path": "memory/scripts/pattern_matcher.py",
+      "type": "script",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "MEMORY-INDEX"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Pattern matching against modified files"
+    },
+    {
+      "id": "PATH-OPTIMIZER",
+      "path": "memory/scripts/path_optimizer.py",
+      "type": "script",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "MEMORY-INDEX"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Compare actual path vs known optimal paths"
+    },
+    {
+      "id": "VALUE-CHECKER",
+      "path": "memory/scripts/value_checker.py",
+      "type": "script",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "00-AGENT-CONSTITUTION"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "V1-V6 constitutional value checks"
+    },
+    {
+      "id": "EVOLUTION-METRICS",
+      "path": "memory/metrics/evolution.json",
+      "type": "metrics",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "RETROSPECTIVE-ENGINE"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Evolution metrics by task type, agent, system health"
+    },
+    {
+      "id": "TASK-DECOMPOSE-BLOCKS",
+      "path": "SKILLS/task-decompose-blocks/SKILL.md",
+      "type": "skill",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "01-COLLABORATION-PROTOCOL"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Phase D.5 core SKILL — decompose modules into folder + block structure"
+    },
+    {
+      "id": "DECOMPOSE-BLOCKS",
+      "path": "SKILLS/task-decompose-blocks/decompose.py",
+      "type": "script",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "TASK-DECOMPOSE-BLOCKS"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "CLI for Phase D.5 block decomposition"
+    },
+    {
+      "id": "FILE-HEADER-PROTOCOL",
+      "path": "docs/08-FILE-HEADER-PROTOCOL.md",
+      "type": "spec",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "04-ENGINEERING-INDEX"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "File header protocol — YAML frontmatter for all core files"
+    },
+    {
+      "id": "VERIFY-HEADERS",
+      "path": "docs/scripts/verify-headers.py",
+      "type": "script",
+      "owner": "ledger-protocol-agent",
+      "depends": [
+        "FILE-HEADER-PROTOCOL"
+      ],
+      "version": 1,
+      "last_verified": "2026-05-20",
+      "description": "Verify file headers across the project"
+    }
+  ],
+  "modules": {}
+}

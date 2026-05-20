@@ -1,3 +1,13 @@
+---
+id: 05-FAQ
+type: reference
+owner: ledger-protocol-agent
+depends:
+  - 01-COLLABORATION-PROTOCOL
+version: 2
+last_verified: 2026-05-20
+---
+
 # FAQ
 
 ## 1) lifecycle-guard failed: RULE_007_REVIEW_BY_NON_OWNER

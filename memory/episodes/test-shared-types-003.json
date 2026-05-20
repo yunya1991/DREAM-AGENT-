@@ -1,0 +1,58 @@
+{
+  "task_id": "test-shared-types-003",
+  "episode_type": "task_execution",
+  "trigger": "archived",
+  "task_type": "shared_boundary_change",
+  "decomposition_path": {
+    "goal_id": "test-stress",
+    "parent_task_id": "",
+    "phase_e_pointer": "",
+    "phase_f_pointer": ""
+  },
+  "execution_path": [
+    {
+      "phase": "Phase 0-8",
+      "status": "archived"
+    }
+  ],
+  "decisions": [],
+  "outcome": {
+    "final_status": "archived",
+    "score": 75,
+    "rework_cycles": 0,
+    "total_duration_minutes": 240,
+    "delivery_pointer": "",
+    "fork_count": 0,
+    "path_efficiency": 1.0
+  },
+  "customer_value_check": {
+    "served_end_user": true,
+    "user_facing_deliverable": "修改共享类型定义",
+    "exploitation_risk_flags": [],
+    "value_checks": [
+      {
+        "value": "V1",
+        "passed": true
+      },
+      {
+        "value": "V2",
+        "passed": false
+      },
+      {
+        "value": "V3",
+        "passed": false
+      },
+      {
+        "value": "V4",
+        "passed": false
+      },
+      {
+        "value": "V5",
+        "passed": false
+      }
+    ]
+  },
+  "created_at": "2026-05-20T07:39:20.019337+00:00",
+  "retrospective_run": true,
+  "retrospective_at": "2026-05-20T07:39:20.019337+00:00"
+}

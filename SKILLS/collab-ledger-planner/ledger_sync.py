@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
+# ---
+# id: LEDGER-SYNC
+# type: script
+# owner: ledger-protocol-agent
+# depends:
+#   - 01-COLLABORATION-PROTOCOL
+# version: 2
+# last_verified: 2026-05-20
+# ---
+
 """
-ledger_sync.py — CLI for syncing AGENT協作工具 ledger with workspace.
+ledger_sync.py — CLI for syncing ledger with workspace.
 
 Sub-commands:
   sync         Generate protocol from plan doc, write to ledger + workspace
@@ -10,6 +20,8 @@ Sub-commands:
 import argparse
 import hashlib
 import json
+import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -28,7 +40,7 @@ def utc_now():
 def find_repo_root(start):
     p = Path(start).resolve()
     for candidate in [p, *p.parents]:
-        if (candidate / "AGENT协作工具" / "ledger" / "tasks" / "index.json").exists():
+        if (candidate / "ledger" / "tasks" / "index.json").exists():
             return candidate
     raise SystemExit("error: repo_root_not_found — run from inside the repo")
 
@@ -40,7 +52,7 @@ def sha256_file(path):
 
 
 def load_ledger(repo_root):
-    ledger_path = Path(repo_root) / "AGENT协作工具" / "ledger" / "tasks" / "index.json"
+    ledger_path = Path(repo_root) / "ledger" / "tasks" / "index.json"
     return json.loads(ledger_path.read_text(encoding="utf-8"))
 
 
@@ -94,7 +106,7 @@ def cmd_sync(args):
     date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
     workspace_name = args.workspace.rstrip("/").split("/")[-1]
     protocol_filename = f"{workspace_name}-LEDGER-{date_str}.md"
-    protocol_dir = repo_root / "AGENT协作工具" / "ledger" / "protocols"
+    protocol_dir = repo_root / "ledger" / "protocols"
 
     cmd = [
         sys.executable, str(plan_script),
@@ -121,7 +133,7 @@ def cmd_sync(args):
     workspace_dir.mkdir(parents=True, exist_ok=True)
     plan_md_path = workspace_dir / "PLAN.md"
     tasks = plan_out.get("draft", plan_out).get("tasks", [])
-    protocol_rel = f"../AGENT协作工具/ledger/protocols/{protocol_filename}"
+    protocol_rel = f"../ledger/protocols/{protocol_filename}"
     now = utc_now()
 
     if not args.dry_run:
@@ -132,7 +144,7 @@ def cmd_sync(args):
 
     sync_state_path = workspace_dir / ".ledger-sync.json"
     ledger_sha = (
-        sha256_file(repo_root / "AGENT协作工具" / "ledger" / "tasks" / "index.json")
+        sha256_file(repo_root / "ledger" / "tasks" / "index.json")
         if not args.dry_run
         else "dry-run"
     )
@@ -140,7 +152,7 @@ def cmd_sync(args):
         "workspace": args.workspace,
         "last_sync": now,
         "trigger": "CLI sync",
-        "protocol_file": f"AGENT协作工具/ledger/protocols/{protocol_filename}",
+        "protocol_file": f"ledger/protocols/{protocol_filename}",
         "ledger_sha": ledger_sha,
         "task_prefix": task_prefix,
         "goal_id": args.goal_id,
@@ -153,11 +165,194 @@ def cmd_sync(args):
     output = {
         "ok": not args.dry_run,
         "dry_run": args.dry_run,
-        "protocol_file": f"AGENT协作工具/ledger/protocols/{protocol_filename}",
+        "protocol_file": f"ledger/protocols/{protocol_filename}",
         "workspace_plan_md": str(plan_md_path),
         "tasks_added": len(tasks),
     }
+
+    # Phase D.5: Generate block structure if requested
+    if args.block_output and tasks:
+        block_result = generate_block_structure(repo_root, args.workspace, tasks, args.dry_run)
+        output["blocks"] = block_result
+
     print(json.dumps(output, ensure_ascii=False, indent=2))
+
+
+def kebab_case(name):
+    """Convert text to kebab-case slug."""
+    slug = re.sub(r'[\u4e00-\u9fff]+', '', name)
+    slug = re.sub(r'[^a-zA-Z0-9]+', '-', slug).strip('-').lower()
+    slug = re.sub(r'-+', '-', slug)
+    if not slug:
+        slug = f"task-{hash(name) % 10000:04d}"
+    return slug[:30]
+
+
+def generate_block_structure(repo_root, workspace, tasks, dry_run=False):
+    """
+    Phase D.5: Generate module folder + BLOCK.md structure from ledger tasks.
+    Groups tasks by parent_task_id or module hint, creates INDEX.md + BLOCK.md files.
+    """
+    workspace_dir = repo_root / workspace
+    modules_dir = workspace_dir / "modules"
+
+    # Group tasks by parent or module
+    groups = {}
+    for t in tasks:
+        parent = t.get("parent_task_id") or t.get("module") or "_root"
+        groups.setdefault(parent, []).append(t)
+
+    created_at = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    results = {}
+
+    for module_name, module_tasks in groups.items():
+        if module_name == "_root" and len(groups) == 1:
+            # Single group, use workspace name as module
+            module_name = workspace.rstrip("/").split("/")[-1]
+
+        module_dir = modules_dir / module_name
+        tasks_dir = module_dir / "tasks"
+        contracts_dir = module_dir / "contracts"
+
+        if dry_run:
+            print(f"  [DRY-RUN] Would create module: modules/{module_name}/ ({len(module_tasks)} blocks)", file=sys.stderr)
+            results[module_name] = {"tasks": len(module_tasks), "dry_run": True}
+            continue
+
+        os.makedirs(tasks_dir, exist_ok=True)
+        os.makedirs(contracts_dir, exist_ok=True)
+
+        blocks_info = []
+        parallel_count = serial_count = shared_count = 0
+
+        for i, t in enumerate(module_tasks, 1):
+            slug = kebab_case(t.get("title", f"task-{i}"))
+            task_id = f"{i:03d}-{slug}"
+            block_dir = tasks_dir / task_id
+            block_file = block_dir / "BLOCK.md"
+
+            task_type = t.get("task_type", "parallel")
+            if task_type == "parallel":
+                parallel_count += 1
+            elif task_type == "serial":
+                serial_count += 1
+            elif task_type == "shared-sync":
+                shared_count += 1
+
+            acceptance = t.get("acceptance_criteria", "详见验收标准")
+            if isinstance(acceptance, list):
+                acceptance = "\n".join(f"  {a}" for a in acceptance)
+
+            block_content = f"""---
+id: {task_id}
+module: {module_name}
+block_index: {i}
+type: {task_type}
+owner: "{t.get('owner_agent', '')}"
+depends: []
+acceptance_criteria: |
+  {acceptance}
+phase_d_contract: ../contracts/phase-d.md
+ledger_task_id: {t.get('task_id', '')}
+status: ready
+version: 1
+created_at: {created_at}
+---
+
+# {t.get('title', task_id)}
+
+## 目标
+{t.get('title', '')}
+
+## 验收标准
+
+> 从 Phase F 继承，可执行/可量化/独立于实现路径
+
+{acceptance}
+
+## 已知教训
+
+> 飞行前查找自动注入：来自 memory/lessons/ 的相关警告
+
+<!-- 自动生成，勿手动编辑 -->
+
+## 最优路径
+
+> 来自 memory/paths/ 的推荐步骤
+
+<!-- 自动生成，勿手动编辑 -->
+"""
+            os.makedirs(block_dir, exist_ok=True)
+            block_file.write_text(block_content, encoding="utf-8")
+            print(f"  [BLOCK] Created: modules/{module_name}/tasks/{task_id}/BLOCK.md")
+
+            blocks_info.append({
+                "id": task_id,
+                "type": task_type,
+                "ledger_task_id": t.get("task_id", ""),
+            })
+
+        # Generate INDEX.md
+        table_rows = ""
+        for b in blocks_info:
+            table_rows += f"| {b['block_index'] if 'block_index' in b else blocks_info.index(b)+1} | {b['id']} | {b['type']} | - | ready | {b.get('owner', '待分配')} |\n"
+
+        index_content = f"""---
+id: {module_name}
+type: module
+owner: governance-agent
+depends:
+  - phase-d-contract: ./contracts/phase-d.md
+total_tasks: {len(module_tasks)}
+parallel_tasks: {parallel_count}
+serial_tasks: {serial_count}
+shared_sync_tasks: {shared_count}
+status: ready
+created_at: {created_at}
+---
+
+# {module_name.replace('-', ' ').title()} 模块
+
+## 区块列表
+
+| # | ID | 类型 | 依赖 | 状态 | 负责人 |
+|---|---|------|------|------|--------|
+{table_rows}
+## 模块契约（Phase D）
+
+详见 Phase D 模块契约文档。
+"""
+        index_file = module_dir / "INDEX.md"
+        index_file.write_text(index_content, encoding="utf-8")
+        print(f"  [INDEX] Created: modules/{module_name}/INDEX.md")
+
+        results[module_name] = {
+            "index_path": f"{workspace}/modules/{module_name}/INDEX.md",
+            "total_tasks": len(module_tasks),
+            "blocks": blocks_info,
+        }
+
+    # Update file registry
+    registry_path = repo_root / "docs" / "file-registry.json"
+    if registry_path.exists():
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        registry.setdefault("modules", {})
+        for mod_name, mod_data in results.items():
+            registry["modules"][mod_name] = {
+                "index": mod_data.get("index_path", f"{workspace}/modules/{mod_name}/INDEX.md"),
+                "phase_d_contract": f"{workspace}/modules/{mod_name}/contracts/",
+                "total_tasks": mod_data["total_tasks"],
+                "status": "ready",
+            }
+        registry["generated_at"] = datetime.now(timezone.utc).isoformat()
+        if not dry_run:
+            registry_path.write_text(
+                json.dumps(registry, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            print(f"  [REGISTRY] Updated: docs/file-registry.json → modules")
+
+    return results
 
 
 def cmd_push_status(args):
@@ -181,7 +376,7 @@ def cmd_push_status(args):
     protocol_file = sync_state.get("protocol_file", "")
     sha_before = sync_state.get("ledger_sha", "")
     sha_after = sha256_file(
-        repo_root / "AGENT协作工具" / "ledger" / "tasks" / "index.json"
+        repo_root / "ledger" / "tasks" / "index.json"
     )
 
     workspace_name = args.workspace.rstrip("/").split("/")[-1]
@@ -252,7 +447,7 @@ def cmd_status(args):
 
     sync_state = json.loads(sync_state_path.read_text(encoding="utf-8"))
     current_sha = sha256_file(
-        repo_root / "AGENT协作工具" / "ledger" / "tasks" / "index.json"
+        repo_root / "ledger" / "tasks" / "index.json"
     )
     sync_state["current_ledger_sha"] = current_sha
     sync_state["drift"] = sync_state.get("ledger_sha") != current_sha
@@ -263,7 +458,7 @@ def cmd_status(args):
 def main():
     parser = argparse.ArgumentParser(
         prog="ledger_sync.py",
-        description="Sync AGENT协作工具 ledger <-> workspace.",
+        description="Sync ledger <-> workspace.",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -273,6 +468,8 @@ def main():
     p_sync.add_argument("--task-prefix", default="")
     p_sync.add_argument("--workspace", default="7-ARTIFACT-HUB-V2")
     p_sync.add_argument("--dry-run", action="store_true")
+    p_sync.add_argument("--block-output", action="store_true",
+                        help="Generate Phase D.5 module folder + BLOCK.md structure")
     p_sync.set_defaults(func=cmd_sync)
 
     p_push = sub.add_parser("push-status", help="Sync ledger task states to workspace PLAN.md")

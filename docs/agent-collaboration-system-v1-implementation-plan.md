@@ -1,3 +1,13 @@
+---
+id: V1-IMPL
+type: plan
+owner: ledger-protocol-agent
+depends:
+  - V1-DESIGN
+version: 1
+last_verified: 2026-05-20
+---
+
 # Agent Collaboration System V1 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
@@ -15,36 +25,36 @@
 ## Repository Layout Changes
 
 **Create**
-- `AGENT协作工具/ledger/README.md`
-- `AGENT协作工具/ledger/tasks/index.json`
-- `AGENT协作工具/ledger/rewards/index.json`
-- `AGENT协作工具/ledger/templates/task-record.json`
-- `AGENT协作工具/ledger/templates/reward-record.json`
-- `AGENT协作工具/templates/pr-comment-exploration-proposal.md`
-- `AGENT协作工具/templates/pr-comment-validation-result.md`
-- `AGENT协作工具/templates/pr-comment-ledger-entry.md`
-- `AGENT协作工具/github-actions/build_agent_collaboration_payload.py`
-- `AGENT协作工具/github-actions/check_agent_collaboration.py`
-- `AGENT协作工具/github-actions/update_agent_ledger.py`
-- `AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`
-- `AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`
-- `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
+- `ledger/README.md`
+- `ledger/tasks/index.json`
+- `ledger/rewards/index.json`
+- `ledger/templates/task-record.json`
+- `ledger/templates/reward-record.json`
+- `templates/pr-comment-exploration-proposal.md`
+- `templates/pr-comment-validation-result.md`
+- `templates/pr-comment-ledger-entry.md`
+- `github-actions/build_agent_collaboration_payload.py`
+- `github-actions/check_agent_collaboration.py`
+- `github-actions/update_agent_ledger.py`
+- `github-actions/tests/test_build_agent_collaboration_payload.py`
+- `github-actions/tests/test_check_agent_collaboration.py`
+- `github-actions/tests/test_update_agent_ledger.py`
 - `.github/workflows/agent-collaboration-claim-guard.yml`
 - `.github/workflows/agent-ledger-maintenance.yml`
 
 **Modify**
-- `AGENT协作工具/README.md`
-- `AGENT协作工具/docs/README.md`
-- `AGENT协作工具/docs/agent-collaboration-system-v1-design.md`
-- `AGENT协作工具/docs/agent-collaboration-system-v1-implementation-plan.md`
-- `AGENT协作工具/templates/pr-comment-started.md`
-- `AGENT协作工具/templates/pr-comment-updated.md`
-- `AGENT协作工具/templates/pr-comment-done.md`
-- `AGENT协作工具/templates/test-report-comment.md`
+- `README.md`
+- `docs/README.md`
+- `docs/agent-collaboration-system-v1-design.md`
+- `docs/agent-collaboration-system-v1-implementation-plan.md`
+- `templates/pr-comment-started.md`
+- `templates/pr-comment-updated.md`
+- `templates/pr-comment-done.md`
+- `templates/test-report-comment.md`
 - `docs/superpowers/templates/agent-task-card.md`
-- `AGENT协作工具/SKILLS/dual-agent-conflict-gate/gatekeeper_config.json`
-- `AGENT协作工具/SKILLS/dual-agent-conflict-gate/conflict_gate.py`
-- `AGENT协作工具/SKILLS/dual-agent-conflict-gate/test_conflict_gate.py`
+- `SKILLS/dual-agent-conflict-gate/gatekeeper_config.json`
+- `SKILLS/dual-agent-conflict-gate/conflict_gate.py`
+- `SKILLS/dual-agent-conflict-gate/test_conflict_gate.py`
 - `.github/pull_request_template.md`
 
 ---
@@ -53,10 +63,10 @@
 
 Before any task work begins, the assigned agent must:
 
-1. Read `AGENT协作工具/ledger/tasks/index.json`
+1. Read `ledger/tasks/index.json`
 2. If a ready task exists, follow the normal claim flow
 3. If no ready task exists, create an exploration proposal comment first and wait for validator approval
-4. Run `AGENT协作工具/SKILLS/dual-agent-conflict-gate/conflict_gate.py`
+4. Run `SKILLS/dual-agent-conflict-gate/conflict_gate.py`
 5. If the result is `SAFE` or `WARNING`, post a `STARTED` comment before editing files
 6. If scope changes, post an `UPDATED` comment
 7. If blocked, post a `BLOCKED` comment
@@ -94,15 +104,15 @@ The implementation should be delivered in six slices:
 ### Task 1: Create the ledger file structure
 
 **Files:**
-- Create: `AGENT协作工具/ledger/README.md`
-- Create: `AGENT协作工具/ledger/tasks/index.json`
-- Create: `AGENT协作工具/ledger/rewards/index.json`
-- Create: `AGENT协作工具/ledger/templates/task-record.json`
-- Create: `AGENT协作工具/ledger/templates/reward-record.json`
+- Create: `ledger/README.md`
+- Create: `ledger/tasks/index.json`
+- Create: `ledger/rewards/index.json`
+- Create: `ledger/templates/task-record.json`
+- Create: `ledger/templates/reward-record.json`
 
 - [ ] **Step 1: Add a failing JSON shape test for the task ledger skeleton**
 
-Create `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py` with:
+Create `github-actions/tests/test_update_agent_ledger.py` with:
 
 ```python
 import json
@@ -133,7 +143,7 @@ if __name__ == "__main__":
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -142,7 +152,7 @@ Expected:
 
 - [ ] **Step 3: Create the initial ledger files**
 
-Create `AGENT协作工具/ledger/tasks/index.json`:
+Create `ledger/tasks/index.json`:
 
 ```json
 {
@@ -153,7 +163,7 @@ Create `AGENT协作工具/ledger/tasks/index.json`:
 }
 ```
 
-Create `AGENT协作工具/ledger/rewards/index.json`:
+Create `ledger/rewards/index.json`:
 
 ```json
 {
@@ -163,7 +173,7 @@ Create `AGENT协作工具/ledger/rewards/index.json`:
 }
 ```
 
-Create `AGENT协作工具/ledger/templates/task-record.json`:
+Create `ledger/templates/task-record.json`:
 
 ```json
 {
@@ -187,7 +197,7 @@ Create `AGENT协作工具/ledger/templates/task-record.json`:
 }
 ```
 
-Create `AGENT协作工具/ledger/templates/reward-record.json`:
+Create `ledger/templates/reward-record.json`:
 
 ```json
 {
@@ -201,7 +211,7 @@ Create `AGENT协作工具/ledger/templates/reward-record.json`:
 }
 ```
 
-Create `AGENT协作工具/ledger/README.md`:
+Create `ledger/README.md`:
 
 ```md
 # AGENT 协作账本
@@ -224,7 +234,7 @@ Create `AGENT协作工具/ledger/README.md`:
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -234,24 +244,24 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/ledger AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+git add ledger github-actions/tests/test_update_agent_ledger.py
 git commit -m "feat(collaboration): add ledger seed files"
 ```
 
 ### Task 2: Add exploration, validation, and ledger templates
 
 **Files:**
-- Create: `AGENT协作工具/templates/pr-comment-exploration-proposal.md`
-- Create: `AGENT协作工具/templates/pr-comment-validation-result.md`
-- Create: `AGENT协作工具/templates/pr-comment-ledger-entry.md`
-- Modify: `AGENT协作工具/templates/pr-comment-started.md`
-- Modify: `AGENT协作工具/templates/pr-comment-done.md`
-- Modify: `AGENT协作工具/templates/test-report-comment.md`
+- Create: `templates/pr-comment-exploration-proposal.md`
+- Create: `templates/pr-comment-validation-result.md`
+- Create: `templates/pr-comment-ledger-entry.md`
+- Modify: `templates/pr-comment-started.md`
+- Modify: `templates/pr-comment-done.md`
+- Modify: `templates/test-report-comment.md`
 - Modify: `docs/superpowers/templates/agent-task-card.md`
 
 - [ ] **Step 1: Write a failing template presence test**
 
-Append to `AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`:
+Append to `github-actions/tests/test_build_agent_collaboration_payload.py`:
 
 ```python
 from pathlib import Path
@@ -277,7 +287,7 @@ class TemplatePresenceTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -286,7 +296,7 @@ Expected:
 
 - [ ] **Step 3: Create the new templates and extend existing ones**
 
-Create `AGENT协作工具/templates/pr-comment-exploration-proposal.md`:
+Create `templates/pr-comment-exploration-proposal.md`:
 
 ```md
 [探索提案 / EXPLORATION_PROPOSAL]
@@ -307,7 +317,7 @@ Requested Exclusive Window: <ISO8601 duration or deadline>
 Status: EXPLORATION_PROPOSAL
 ```
 
-Create `AGENT协作工具/templates/pr-comment-validation-result.md`:
+Create `templates/pr-comment-validation-result.md`:
 
 ```md
 [验证结论 / VALIDATION_RESULT]
@@ -322,7 +332,7 @@ Reward Multiplier: <value>
 Ledger Update: <task pointer or none>
 ```
 
-Create `AGENT协作工具/templates/pr-comment-ledger-entry.md`:
+Create `templates/pr-comment-ledger-entry.md`:
 
 ```md
 [账本记账 / LEDGER_ENTRY]
@@ -335,7 +345,7 @@ Final Credit Agent: <agent>
 Ledger Entry Path: <path>
 ```
 
-Update `AGENT协作工具/templates/pr-comment-started.md` by inserting:
+Update `templates/pr-comment-started.md` by inserting:
 
 ```md
 Task ID: <task_id>
@@ -343,14 +353,14 @@ Workspace Path: <path>
 Claim Target: <task id or proposal>
 ```
 
-Update `AGENT协作工具/templates/pr-comment-done.md` by inserting:
+Update `templates/pr-comment-done.md` by inserting:
 
 ```md
 Parent Pointer: <pointer>
 Delivery Hash: <hash>
 ```
 
-Update `AGENT协作工具/templates/test-report-comment.md` by inserting:
+Update `templates/test-report-comment.md` by inserting:
 
 ```md
 Task ID: <task_id>
@@ -375,7 +385,7 @@ Update `docs/superpowers/templates/agent-task-card.md` by adding:
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -385,15 +395,15 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/templates docs/superpowers/templates/agent-task-card.md AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+git add templates docs/superpowers/templates/agent-task-card.md github-actions/tests/test_build_agent_collaboration_payload.py
 git commit -m "feat(collaboration): add proposal and ledger templates"
 ```
 
 ### Task 3: Build the collaboration payload parser
 
 **Files:**
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/build_agent_collaboration_payload.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/build_agent_collaboration_payload.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/tests/test_build_agent_collaboration_payload.py`
 
 - [ ] **Step 1: Write the failing parser test**
 
@@ -423,7 +433,7 @@ class CollaborationPayloadTests(unittest.TestCase):
                 "Proposal Type: bugfix\n"
                 "Necessity:\n- close gap\n"
                 "Value:\n- remove blocker\n"
-                "Scope Boundaries:\n- AGENT协作工具/ledger/\n"
+                "Scope Boundaries:\n- ledger/\n"
                 "Requested Exclusive Window: 2026-05-18T00:00:00Z\n"
                 "Status: EXPLORATION_PROPOSAL\n",
                 "[验证结论 / VALIDATION_RESULT]\n\n"
@@ -432,7 +442,7 @@ class CollaborationPayloadTests(unittest.TestCase):
                 "Score: 88\n"
                 "Decision: ACCEPTED\n"
                 "Reward Multiplier: 1.2\n"
-                "Ledger Update: AGENT协作工具/ledger/tasks/index.json\n",
+                "Ledger Update: ledger/tasks/index.json\n",
             ],
         }
         payload = MODULE.build_payload(raw)
@@ -446,7 +456,7 @@ class CollaborationPayloadTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -455,7 +465,7 @@ Expected:
 
 - [ ] **Step 3: Write minimal parser implementation**
 
-Create `AGENT协作工具/github-actions/build_agent_collaboration_payload.py` with:
+Create `github-actions/build_agent_collaboration_payload.py` with:
 
 ```python
 import json
@@ -498,7 +508,7 @@ if __name__ == "__main__":
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -508,19 +518,19 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/github-actions/build_agent_collaboration_payload.py AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+git add github-actions/build_agent_collaboration_payload.py github-actions/tests/test_build_agent_collaboration_payload.py
 git commit -m "feat(collaboration): add collaboration payload parser"
 ```
 
 ### Task 4: Implement the collaboration checker
 
 **Files:**
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/check_agent_collaboration.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/check_agent_collaboration.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/tests/test_check_agent_collaboration.py`
 
 - [ ] **Step 1: Write the failing checker test**
 
-Create `AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`:
+Create `github-actions/tests/test_check_agent_collaboration.py`:
 
 ```python
 import importlib.util
@@ -551,7 +561,7 @@ class CollaborationCheckerTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
 ```
 
 Expected:
@@ -560,7 +570,7 @@ Expected:
 
 - [ ] **Step 3: Implement the minimal rule engine**
 
-Create `AGENT协作工具/github-actions/check_agent_collaboration.py`:
+Create `github-actions/check_agent_collaboration.py`:
 
 ```python
 import json
@@ -588,7 +598,7 @@ if __name__ == "__main__":
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
 ```
 
 Expected:
@@ -598,17 +608,17 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/github-actions/check_agent_collaboration.py AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+git add github-actions/check_agent_collaboration.py github-actions/tests/test_check_agent_collaboration.py
 git commit -m "feat(collaboration): add collaboration checker"
 ```
 
 ### Task 5: Implement ledger update and reward calculation
 
 **Files:**
-- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/update_agent_ledger.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/ledger/tasks/index.json`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/ledger/rewards/index.json`
+- Create: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/github-actions/tests/test_update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/ledger/tasks/index.json`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/ledger/rewards/index.json`
 
 - [ ] **Step 1: Add a failing reward calculation test**
 
@@ -636,7 +646,7 @@ class RewardCalculationTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -645,7 +655,7 @@ Expected:
 
 - [ ] **Step 3: Implement the minimal ledger updater**
 
-Create `AGENT协作工具/github-actions/update_agent_ledger.py`:
+Create `github-actions/update_agent_ledger.py`:
 
 ```python
 import json
@@ -683,7 +693,7 @@ def append_reward_record(reward_index, record):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -693,7 +703,7 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/github-actions/update_agent_ledger.py AGENT协作工具/github-actions/tests/test_update_agent_ledger.py AGENT协作工具/ledger/tasks/index.json AGENT协作工具/ledger/rewards/index.json
+git add github-actions/update_agent_ledger.py github-actions/tests/test_update_agent_ledger.py ledger/tasks/index.json ledger/rewards/index.json
 git commit -m "feat(collaboration): add ledger reward updater"
 ```
 
@@ -706,7 +716,7 @@ git commit -m "feat(collaboration): add ledger reward updater"
 
 - [ ] **Step 1: Write the failing workflow shape test**
 
-Add to `AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`:
+Add to `github-actions/tests/test_check_agent_collaboration.py`:
 
 ```python
 from pathlib import Path
@@ -730,7 +740,7 @@ class WorkflowPresenceTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
 ```
 
 Expected:
@@ -757,9 +767,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build collaboration payload
-        run: echo '{}' | python3 AGENT协作工具/github-actions/build_agent_collaboration_payload.py > payload.json
+        run: echo '{}' | python3 github-actions/build_agent_collaboration_payload.py > payload.json
       - name: Check collaboration rules
-        run: cat payload.json | python3 AGENT协作工具/github-actions/check_agent_collaboration.py
+        run: cat payload.json | python3 github-actions/check_agent_collaboration.py
 ```
 
 Create `.github/workflows/agent-ledger-maintenance.yml`:
@@ -778,7 +788,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate ledger seed files
-        run: python3 -m unittest discover -s "AGENT协作工具/github-actions/tests" -p "test_*.py"
+        run: python3 -m unittest discover -s "github-actions/tests" -p "test_*.py"
 ```
 
 Update `.github/pull_request_template.md` to add:
@@ -797,7 +807,7 @@ Delivery Pointer: <comment url>
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
 ```
 
 Expected:
@@ -807,20 +817,20 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add .github/workflows/agent-collaboration-claim-guard.yml .github/workflows/agent-ledger-maintenance.yml .github/pull_request_template.md AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+git add .github/workflows/agent-collaboration-claim-guard.yml .github/workflows/agent-ledger-maintenance.yml .github/pull_request_template.md github-actions/tests/test_check_agent_collaboration.py
 git commit -m "feat(collaboration): wire collaboration workflows"
 ```
 
 ### Task 7: Align gatekeeper and validator ownership
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/dual-agent-conflict-gate/gatekeeper_config.json`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/dual-agent-conflict-gate/conflict_gate.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/SKILLS/dual-agent-conflict-gate/test_conflict_gate.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/dual-agent-conflict-gate/gatekeeper_config.json`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/dual-agent-conflict-gate/conflict_gate.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/SKILLS/dual-agent-conflict-gate/test_conflict_gate.py`
 
 - [ ] **Step 1: Write the failing validator-only review test**
 
-Append to `AGENT协作工具/SKILLS/dual-agent-conflict-gate/test_conflict_gate.py`:
+Append to `SKILLS/dual-agent-conflict-gate/test_conflict_gate.py`:
 
 ```python
 def test_shared_sync_required_for_validatorless_closeout(self):
@@ -846,7 +856,7 @@ def test_shared_sync_required_for_validatorless_closeout(self):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/SKILLS/dual-agent-conflict-gate/test_conflict_gate.py
+python3 -m unittest SKILLS/dual-agent-conflict-gate/test_conflict_gate.py
 ```
 
 Expected:
@@ -877,7 +887,7 @@ if cfg.get("collaboration_policy", {}).get("validation_requires_validator_agent"
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/SKILLS/dual-agent-conflict-gate/test_conflict_gate.py
+python3 -m unittest SKILLS/dual-agent-conflict-gate/test_conflict_gate.py
 ```
 
 Expected:
@@ -887,21 +897,21 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/SKILLS/dual-agent-conflict-gate/gatekeeper_config.json AGENT协作工具/SKILLS/dual-agent-conflict-gate/conflict_gate.py AGENT协作工具/SKILLS/dual-agent-conflict-gate/test_conflict_gate.py
+git add SKILLS/dual-agent-conflict-gate/gatekeeper_config.json SKILLS/dual-agent-conflict-gate/conflict_gate.py SKILLS/dual-agent-conflict-gate/test_conflict_gate.py
 git commit -m "feat(collaboration): require validator ownership"
 ```
 
 ### Task 8: Update entrypoint docs and migration guidance
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/README.md`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/docs/README.md`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/docs/agent-collaboration-system-v1-design.md`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/AGENT协作工具/docs/agent-collaboration-system-v1-implementation-plan.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/README.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/docs/README.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/docs/agent-collaboration-system-v1-design.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/dreambuddy-v1/docs/agent-collaboration-system-v1-implementation-plan.md`
 
 - [ ] **Step 1: Write a failing docs entrypoint test**
 
-Add to `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`:
+Add to `github-actions/tests/test_update_agent_ledger.py`:
 
 ```python
 class DocsEntrypointTests(unittest.TestCase):
@@ -915,7 +925,7 @@ class DocsEntrypointTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -924,14 +934,14 @@ Expected:
 
 - [ ] **Step 3: Update the docs entrypoints**
 
-Update `AGENT协作工具/docs/README.md` with:
+Update `docs/README.md` with:
 
 ```md
 - `agent-collaboration-system-v1-design.md`：AGENT协作系统 v1 正式设计草案
 - `agent-collaboration-system-v1-implementation-plan.md`：AGENT协作系统 v1 实施计划
 ```
 
-Update `AGENT协作工具/README.md` with:
+Update `README.md` with:
 
 ```md
 ## AGENT协作系统
@@ -949,7 +959,7 @@ Update `AGENT协作工具/README.md` with:
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -959,7 +969,7 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/README.md AGENT协作工具/docs/README.md AGENT协作工具/docs/agent-collaboration-system-v1-design.md AGENT协作工具/docs/agent-collaboration-system-v1-implementation-plan.md AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+git add README.md docs/README.md docs/agent-collaboration-system-v1-design.md docs/agent-collaboration-system-v1-implementation-plan.md github-actions/tests/test_update_agent_ledger.py
 git commit -m "docs(collaboration): link v1 implementation plan"
 ```
 
@@ -1000,7 +1010,7 @@ Type consistency:
 
 ## Execution Handoff
 
-Plan complete and saved to `AGENT协作工具/docs/agent-collaboration-system-v1-implementation-plan.md`. Two execution options:
+Plan complete and saved to `docs/agent-collaboration-system-v1-implementation-plan.md`. Two execution options:
 
 1. Subagent-Driven (recommended) - I dispatch a fresh subagent per task, review between tasks, fast iteration
 

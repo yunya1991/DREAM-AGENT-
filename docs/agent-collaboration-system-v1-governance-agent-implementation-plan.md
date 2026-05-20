@@ -1,3 +1,13 @@
+---
+id: V1-GOVERNANCE-AGENT
+type: plan
+owner: ledger-protocol-agent
+depends:
+  - V1-DESIGN
+version: 1
+last_verified: 2026-05-20
+---
+
 # Agent Collaboration System V1 Governance Agent Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
@@ -13,26 +23,26 @@
 ## Repository Layout Changes
 
 **Create**
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/docs/agent-collaboration-system-v1-governance-agent-implementation-plan.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/docs/agent-collaboration-system-v1-governance-agent-implementation-plan.md`
 
 **Modify**
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/ledger/templates/task-record.json`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/templates/pr-comment-started.md`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/templates/pr-comment-updated.md`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/templates/pr-comment-done.md`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/templates/pr-comment-validation-result.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/ledger/templates/task-record.json`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/templates/pr-comment-started.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/templates/pr-comment-updated.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/templates/pr-comment-done.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/templates/pr-comment-validation-result.md`
 - `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/docs/superpowers/templates/agent-task-card.md`
 - `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/.github/pull_request_template.md`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/build_agent_collaboration_payload.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/check_agent_collaboration.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/update_agent_ledger.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/build_agent_collaboration_payload.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/check_agent_collaboration.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/update_agent_ledger.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_build_agent_collaboration_payload.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_check_agent_collaboration.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_update_agent_ledger.py`
 - `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/.github/workflows/agent-collaboration-claim-guard.yml`
 - `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/.github/workflows/agent-ledger-maintenance.yml`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/docs/README.md`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/README.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/docs/README.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/README.md`
 
 ---
 
@@ -58,12 +68,12 @@
 ### Task 1: Extend the task ledger schema for governance
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/ledger/templates/task-record.json`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/ledger/templates/task-record.json`
 
 - [ ] **Step 1: Write the failing governance schema test**
 
-Append to `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`:
+Append to `github-actions/tests/test_update_agent_ledger.py`:
 
 ```python
 class GovernanceTaskTemplateTests(unittest.TestCase):
@@ -96,7 +106,7 @@ class GovernanceTaskTemplateTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -105,7 +115,7 @@ Expected:
 
 - [ ] **Step 3: Extend the task template with governance fields**
 
-Update `AGENT协作工具/ledger/templates/task-record.json` to:
+Update `ledger/templates/task-record.json` to:
 
 ```json
 {
@@ -156,7 +166,7 @@ Update `AGENT协作工具/ledger/templates/task-record.json` to:
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -166,24 +176,24 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/ledger/templates/task-record.json AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+git add ledger/templates/task-record.json github-actions/tests/test_update_agent_ledger.py
 git commit -m "feat(collaboration): extend governance task schema"
 ```
 
 ### Task 2: Surface governance fields in templates and task entrypoints
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/templates/pr-comment-started.md`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/templates/pr-comment-updated.md`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/templates/pr-comment-done.md`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/templates/pr-comment-validation-result.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_build_agent_collaboration_payload.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/templates/pr-comment-started.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/templates/pr-comment-updated.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/templates/pr-comment-done.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/templates/pr-comment-validation-result.md`
 - Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/docs/superpowers/templates/agent-task-card.md`
 - Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/.github/pull_request_template.md`
 
 - [ ] **Step 1: Write the failing governance template test**
 
-Append to `AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`:
+Append to `github-actions/tests/test_build_agent_collaboration_payload.py`:
 
 ```python
 class GovernanceTemplateFieldTests(unittest.TestCase):
@@ -209,7 +219,7 @@ class GovernanceTemplateFieldTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -218,7 +228,7 @@ Expected:
 
 - [ ] **Step 3: Extend the templates with governance fields**
 
-Insert into `AGENT协作工具/templates/pr-comment-started.md`:
+Insert into `templates/pr-comment-started.md`:
 
 ```md
 Governance Agent: <agent>
@@ -228,7 +238,7 @@ Current Sync State: <none | pending | in_review | cleared>
 Next Required Action: <governance / developer / validator step>
 ```
 
-Insert into `AGENT协作工具/templates/pr-comment-updated.md`:
+Insert into `templates/pr-comment-updated.md`:
 
 ```md
 Governance Agent: <agent>
@@ -237,14 +247,14 @@ Current Sync State: <none | pending | in_review | cleared>
 Next Required Action: <updated next step>
 ```
 
-Insert into `AGENT协作工具/templates/pr-comment-done.md`:
+Insert into `templates/pr-comment-done.md`:
 
 ```md
 Validation Pointer: <comment url or pointer>
 Archive Summary: <one-line governance closeout summary>
 ```
 
-Insert into `AGENT协作工具/templates/pr-comment-validation-result.md`:
+Insert into `templates/pr-comment-validation-result.md`:
 
 ```md
 Governance Handoff: <ledgered | archived | knowledge_synced pending>
@@ -280,7 +290,7 @@ Next Required Action: <who does what next>
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -290,19 +300,19 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/templates docs/superpowers/templates/agent-task-card.md .github/pull_request_template.md AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+git add templates docs/superpowers/templates/agent-task-card.md .github/pull_request_template.md github-actions/tests/test_build_agent_collaboration_payload.py
 git commit -m "feat(collaboration): surface governance template fields"
 ```
 
 ### Task 3: Extend the collaboration payload builder for governance signals
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/build_agent_collaboration_payload.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/build_agent_collaboration_payload.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_build_agent_collaboration_payload.py`
 
 - [ ] **Step 1: Write the failing parser test**
 
-Append to `AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`:
+Append to `github-actions/tests/test_build_agent_collaboration_payload.py`:
 
 ```python
     def test_extracts_governance_and_state_machine_fields(self):
@@ -340,7 +350,7 @@ Append to `AGENT协作工具/github-actions/tests/test_build_agent_collaboration
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -349,7 +359,7 @@ Expected:
 
 - [ ] **Step 3: Implement the minimal parser changes**
 
-Update `AGENT协作工具/github-actions/build_agent_collaboration_payload.py` to add the new fields:
+Update `github-actions/build_agent_collaboration_payload.py` to add the new fields:
 
 ```python
 def last_comment_with_prefix(comments, prefix):
@@ -385,7 +395,7 @@ def build_payload(raw):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -395,19 +405,19 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/github-actions/build_agent_collaboration_payload.py AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+git add github-actions/build_agent_collaboration_payload.py github-actions/tests/test_build_agent_collaboration_payload.py
 git commit -m "feat(collaboration): parse governance payload fields"
 ```
 
 ### Task 4: Enforce governance state machine rules in the collaboration checker
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/check_agent_collaboration.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/check_agent_collaboration.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_check_agent_collaboration.py`
 
 - [ ] **Step 1: Write the failing checker tests**
 
-Append to `AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`:
+Append to `github-actions/tests/test_check_agent_collaboration.py`:
 
 ```python
     def test_blocks_invalid_transition_to_knowledge_synced(self):
@@ -444,7 +454,7 @@ Append to `AGENT协作工具/github-actions/tests/test_check_agent_collaboration
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
 ```
 
 Expected:
@@ -453,7 +463,7 @@ Expected:
 
 - [ ] **Step 3: Implement the minimal governance rule engine**
 
-Update `AGENT协作工具/github-actions/check_agent_collaboration.py`:
+Update `github-actions/check_agent_collaboration.py`:
 
 ```python
 ALLOWED_TRANSITIONS = {
@@ -496,7 +506,7 @@ def evaluate_payload(payload):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
 ```
 
 Expected:
@@ -506,26 +516,26 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/github-actions/check_agent_collaboration.py AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+git add github-actions/check_agent_collaboration.py github-actions/tests/test_check_agent_collaboration.py
 git commit -m "feat(collaboration): enforce governance state rules"
 ```
 
 ### Task 5: Extend the ledger updater for governance closure
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/update_agent_ledger.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_update_agent_ledger.py`
 
 - [ ] **Step 1: Write the failing governance closure tests**
 
-Append to `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`:
+Append to `github-actions/tests/test_update_agent_ledger.py`:
 
 ```python
 class GovernanceClosureTests(unittest.TestCase):
     def test_builds_governance_closure_record(self):
         closure = MODULE.build_governance_closure(
             archive_summary="closed with sync notes",
-            index_updates=["AGENT协作工具/docs/README.md"],
+            index_updates=["docs/README.md"],
             faq_decision="written",
             faq_entries=["shared-sync closeout"],
             closure_agent="SOLO-GOV",
@@ -555,7 +565,7 @@ class GovernanceClosureTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -564,7 +574,7 @@ Expected:
 
 - [ ] **Step 3: Implement the minimal governance closure helpers**
 
-Update `AGENT协作工具/github-actions/update_agent_ledger.py`:
+Update `github-actions/update_agent_ledger.py`:
 
 ```python
 def build_governance_closure(
@@ -605,7 +615,7 @@ def apply_status_transition(task, requested_status):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -615,21 +625,21 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/github-actions/update_agent_ledger.py AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+git add github-actions/update_agent_ledger.py github-actions/tests/test_update_agent_ledger.py
 git commit -m "feat(collaboration): add governance closure updater"
 ```
 
 ### Task 6: Wire governance docs and workflow entrypoints
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_update_agent_ledger.py`
 - Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/.github/workflows/agent-ledger-maintenance.yml`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/docs/README.md`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/README.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/docs/README.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/README.md`
 
 - [ ] **Step 1: Write the failing docs entrypoint test**
 
-Append to `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`:
+Append to `github-actions/tests/test_update_agent_ledger.py`:
 
 ```python
     def test_docs_readmes_link_governance_increment_plan(self):
@@ -645,7 +655,7 @@ Append to `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`:
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -654,23 +664,23 @@ Expected:
 
 - [ ] **Step 3: Update docs entrypoints and maintenance workflow**
 
-Update `AGENT协作工具/docs/README.md`:
+Update `docs/README.md`:
 
 ```md
 - `agent-collaboration-system-v1-governance-agent-implementation-plan.md`：治理 AGENT 与强治理状态机字段扩展实施计划
 ```
 
-Update `AGENT协作工具/README.md`:
+Update `README.md`:
 
 ```md
-- `AGENT协作工具/docs/agent-collaboration-system-v1-governance-agent-implementation-plan.md`：治理 AGENT 增量实施计划
+- `docs/agent-collaboration-system-v1-governance-agent-implementation-plan.md`：治理 AGENT 增量实施计划
 ```
 
 Update `.github/workflows/agent-ledger-maintenance.yml` to keep the full governance test suite visible:
 
 ```yaml
       - name: Validate collaboration and governance assets
-        run: python3 -m unittest discover -s "AGENT协作工具/github-actions/tests" -p "test_*.py"
+        run: python3 -m unittest discover -s "github-actions/tests" -p "test_*.py"
 ```
 
 - [ ] **Step 4: Run test to verify it passes**
@@ -678,8 +688,8 @@ Update `.github/workflows/agent-ledger-maintenance.yml` to keep the full governa
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
-python3 -m unittest discover -s AGENT协作工具/github-actions/tests -p 'test_*.py'
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest discover -s github-actions/tests -p 'test_*.py'
 ```
 
 Expected:
@@ -689,7 +699,7 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/docs/README.md AGENT协作工具/README.md .github/workflows/agent-ledger-maintenance.yml AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+git add docs/README.md README.md .github/workflows/agent-ledger-maintenance.yml github-actions/tests/test_update_agent_ledger.py
 git commit -m "docs(collaboration): link governance increment plan"
 ```
 
@@ -726,7 +736,7 @@ Type consistency:
 
 ## Execution Handoff
 
-Plan complete and saved to `AGENT协作工具/docs/agent-collaboration-system-v1-governance-agent-implementation-plan.md`. Two execution options:
+Plan complete and saved to `docs/agent-collaboration-system-v1-governance-agent-implementation-plan.md`. Two execution options:
 
 1. Subagent-Driven (recommended) - I dispatch a fresh subagent per task, review between tasks, fast iteration
 

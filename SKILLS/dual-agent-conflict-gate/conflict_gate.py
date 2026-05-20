@@ -1,4 +1,16 @@
 #!/usr/bin/env python3
+# ---
+# id: CONFLICT-GATE
+# type: script
+# owner: ledger-protocol-agent
+# depends:
+#   - 01-COLLABORATION-PROTOCOL
+
+# version: 1
+# last_verified: 2026-05-20
+# ---
+
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 dual-agent-conflict-gate — AGENT 协作冲突前置门禁（兼容双 AGENT 场景）

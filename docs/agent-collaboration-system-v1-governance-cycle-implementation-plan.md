@@ -1,3 +1,13 @@
+---
+id: V1-GOVERNANCE-CYCLE
+type: plan
+owner: ledger-protocol-agent
+depends:
+  - V1-DESIGN
+version: 1
+last_verified: 2026-05-20
+---
+
 # Agent Collaboration System V1 Governance Cycle Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
@@ -6,27 +16,27 @@
 
 **Architecture:** 新增 `run_governance_ledger_cycle.py` 作为唯一业务入口，workflow 只负责准备输入和触发执行。现有 `build_agent_collaboration_payload.py`、`check_agent_collaboration.py`、`update_agent_ledger.py` 保留，但职责收敛为纯函数依赖模块，由控制器统一编排，并输出对未来 Trae 巡检型 AGENT 友好的结构化结果。
 
-**Tech Stack:** Python 3.11 standard library, JSON, unittest, GitHub Actions YAML, existing `AGENT协作工具/github-actions` layout.
+**Tech Stack:** Python 3.11 standard library, JSON, unittest, GitHub Actions YAML, existing `github-actions` layout.
 
 ---
 
 ## File Structure
 
 **Create**
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/run_governance_ledger_cycle.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_run_governance_ledger_cycle.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/docs/agent-collaboration-system-v1-governance-cycle-implementation-plan.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/run_governance_ledger_cycle.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_run_governance_ledger_cycle.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/docs/agent-collaboration-system-v1-governance-cycle-implementation-plan.md`
 
 **Modify**
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/build_agent_collaboration_payload.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/check_agent_collaboration.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/update_agent_ledger.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/build_agent_collaboration_payload.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/check_agent_collaboration.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/update_agent_ledger.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_build_agent_collaboration_payload.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_check_agent_collaboration.py`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_update_agent_ledger.py`
 - `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/.github/workflows/agent-collaboration-claim-guard.yml`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/docs/README.md`
-- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/README.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/docs/README.md`
+- `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/README.md`
 
 **Responsibilities**
 - `run_governance_ledger_cycle.py`: 编排一次最小闭环执行周期，输出 `cycle_result`
@@ -61,12 +71,12 @@
 ### Task 1: Enrich the collaboration payload for cycle execution
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/build_agent_collaboration_payload.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/build_agent_collaboration_payload.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_build_agent_collaboration_payload.py`
 
 - [ ] **Step 1: Write the failing payload test**
 
-Append to `AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py`:
+Append to `github-actions/tests/test_build_agent_collaboration_payload.py`:
 
 ```python
     def test_extracts_cycle_transition_fields(self):
@@ -111,7 +121,7 @@ Append to `AGENT协作工具/github-actions/tests/test_build_agent_collaboration
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -120,7 +130,7 @@ Expected:
 
 - [ ] **Step 3: Implement the minimal payload enrichment**
 
-Update `AGENT协作工具/github-actions/build_agent_collaboration_payload.py` with:
+Update `github-actions/build_agent_collaboration_payload.py` with:
 
 ```python
 def handoff_to_requested_status(handoff):
@@ -171,7 +181,7 @@ def build_payload(raw):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+python3 -m unittest github-actions/tests/test_build_agent_collaboration_payload.py
 ```
 
 Expected:
@@ -181,21 +191,21 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/github-actions/build_agent_collaboration_payload.py AGENT协作工具/github-actions/tests/test_build_agent_collaboration_payload.py
+git add github-actions/build_agent_collaboration_payload.py github-actions/tests/test_build_agent_collaboration_payload.py
 git commit -m "feat(collaboration): enrich governance cycle payload"
 ```
 
 ### Task 2: Make checker and updater controller-friendly
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/check_agent_collaboration.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/update_agent_ledger.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/check_agent_collaboration.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_check_agent_collaboration.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_update_agent_ledger.py`
 
 - [ ] **Step 1: Write the failing checker and updater tests**
 
-Append to `AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`:
+Append to `github-actions/tests/test_check_agent_collaboration.py`:
 
 ```python
     def test_returns_recommended_next_action_for_block(self):
@@ -212,7 +222,7 @@ Append to `AGENT协作工具/github-actions/tests/test_check_agent_collaboration
         )
 ```
 
-Append to `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`:
+Append to `github-actions/tests/test_update_agent_ledger.py`:
 
 ```python
 class GovernanceUpdaterIOTests(unittest.TestCase):
@@ -241,8 +251,8 @@ class GovernanceUpdaterIOTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -251,7 +261,7 @@ Expected:
 
 - [ ] **Step 3: Implement minimal controller-friendly outputs**
 
-Update `AGENT协作工具/github-actions/check_agent_collaboration.py`:
+Update `github-actions/check_agent_collaboration.py`:
 
 ```python
 def evaluate_payload(payload):
@@ -279,7 +289,7 @@ def evaluate_payload(payload):
     }
 ```
 
-Update `AGENT协作工具/github-actions/update_agent_ledger.py`:
+Update `github-actions/update_agent_ledger.py`:
 
 ```python
 def apply_status_transition(task, requested_status):
@@ -330,8 +340,8 @@ def apply_status_transition(task, requested_status):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -341,19 +351,19 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/github-actions/check_agent_collaboration.py AGENT协作工具/github-actions/update_agent_ledger.py AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+git add github-actions/check_agent_collaboration.py github-actions/update_agent_ledger.py github-actions/tests/test_check_agent_collaboration.py github-actions/tests/test_update_agent_ledger.py
 git commit -m "feat(collaboration): prepare governance cycle dependencies"
 ```
 
 ### Task 3: Add the governance cycle controller and integration tests
 
 **Files:**
-- Create: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/run_governance_ledger_cycle.py`
-- Create: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_run_governance_ledger_cycle.py`
+- Create: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/run_governance_ledger_cycle.py`
+- Create: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_run_governance_ledger_cycle.py`
 
 - [ ] **Step 1: Write the failing controller tests**
 
-Create `AGENT协作工具/github-actions/tests/test_run_governance_ledger_cycle.py`:
+Create `github-actions/tests/test_run_governance_ledger_cycle.py`:
 
 ```python
 import importlib.util
@@ -497,7 +507,7 @@ if __name__ == "__main__":
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_run_governance_ledger_cycle.py
+python3 -m unittest github-actions/tests/test_run_governance_ledger_cycle.py
 ```
 
 Expected:
@@ -506,7 +516,7 @@ Expected:
 
 - [ ] **Step 3: Implement the minimal controller**
 
-Create `AGENT协作工具/github-actions/run_governance_ledger_cycle.py`:
+Create `github-actions/run_governance_ledger_cycle.py`:
 
 ```python
 import importlib.util
@@ -627,7 +637,7 @@ if __name__ == "__main__":
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_run_governance_ledger_cycle.py
+python3 -m unittest github-actions/tests/test_run_governance_ledger_cycle.py
 ```
 
 Expected:
@@ -637,7 +647,7 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/github-actions/run_governance_ledger_cycle.py AGENT协作工具/github-actions/tests/test_run_governance_ledger_cycle.py
+git add github-actions/run_governance_ledger_cycle.py github-actions/tests/test_run_governance_ledger_cycle.py
 git commit -m "feat(collaboration): add governance cycle controller"
 ```
 
@@ -645,12 +655,12 @@ git commit -m "feat(collaboration): add governance cycle controller"
 
 **Files:**
 - Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/.github/workflows/agent-collaboration-claim-guard.yml`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_check_agent_collaboration.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_update_agent_ledger.py`
 
 - [ ] **Step 1: Write the failing workflow entrypoint test**
 
-Append to `AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py`:
+Append to `github-actions/tests/test_check_agent_collaboration.py`:
 
 ```python
 class GovernanceWorkflowTests(unittest.TestCase):
@@ -668,7 +678,7 @@ class GovernanceWorkflowTests(unittest.TestCase):
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
 ```
 
 Expected:
@@ -682,10 +692,10 @@ Update `.github/workflows/agent-collaboration-claim-guard.yml`:
 ```yaml
       - name: Run governance ledger cycle
         run: |
-          python3 "AGENT协作工具/github-actions/run_governance_ledger_cycle.py" \
+          python3 "github-actions/run_governance_ledger_cycle.py" \
             agent_collaboration_raw.json \
-            "AGENT协作工具/ledger/tasks/index.json" \
-            "AGENT协作工具/ledger/rewards/index.json" > agent_governance_cycle_result.json
+            "ledger/tasks/index.json" \
+            "ledger/rewards/index.json" > agent_governance_cycle_result.json
           python3 - <<'PY'
           import json
           import sys
@@ -705,8 +715,8 @@ Remove the older `Normalize collaboration payload` and `Run collaboration checke
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
-python3 -m unittest AGENT协作工具/github-actions/tests/test_run_governance_ledger_cycle.py
+python3 -m unittest github-actions/tests/test_check_agent_collaboration.py
+python3 -m unittest github-actions/tests/test_run_governance_ledger_cycle.py
 ```
 
 Expected:
@@ -716,20 +726,20 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add .github/workflows/agent-collaboration-claim-guard.yml AGENT协作工具/github-actions/tests/test_check_agent_collaboration.py
+git add .github/workflows/agent-collaboration-claim-guard.yml github-actions/tests/test_check_agent_collaboration.py
 git commit -m "ci(collaboration): route claim guard through governance cycle"
 ```
 
 ### Task 5: Expose the plan and add full-suite verification
 
 **Files:**
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/docs/README.md`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/README.md`
-- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/docs/README.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/README.md`
+- Modify: `/Users/zhangjiangtao/WorkBuddy/_wt_agent_main_merge/github-actions/tests/test_update_agent_ledger.py`
 
 - [ ] **Step 1: Write the failing docs entrypoint test**
 
-Append to `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`:
+Append to `github-actions/tests/test_update_agent_ledger.py`:
 
 ```python
     def test_docs_readmes_link_governance_cycle_plan(self):
@@ -745,7 +755,7 @@ Append to `AGENT协作工具/github-actions/tests/test_update_agent_ledger.py`:
 Run:
 
 ```bash
-python3 -m unittest AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+python3 -m unittest github-actions/tests/test_update_agent_ledger.py
 ```
 
 Expected:
@@ -754,16 +764,16 @@ Expected:
 
 - [ ] **Step 3: Update docs entrypoints**
 
-Update `AGENT协作工具/docs/README.md`:
+Update `docs/README.md`:
 
 ```md
 - `agent-collaboration-system-v1-governance-cycle-implementation-plan.md`：治理账本最小闭环控制器实施计划
 ```
 
-Update `AGENT协作工具/README.md`:
+Update `README.md`:
 
 ```md
-- `AGENT协作工具/docs/agent-collaboration-system-v1-governance-cycle-implementation-plan.md`：治理账本最小闭环控制器实施计划
+- `docs/agent-collaboration-system-v1-governance-cycle-implementation-plan.md`：治理账本最小闭环控制器实施计划
 ```
 
 - [ ] **Step 4: Run full verification**
@@ -771,8 +781,8 @@ Update `AGENT协作工具/README.md`:
 Run:
 
 ```bash
-python3 -m unittest discover -s AGENT协作工具/github-actions/tests -p 'test_*.py'
-python3 -m unittest AGENT协作工具/SKILLS/dual-agent-conflict-gate/test_conflict_gate.py
+python3 -m unittest discover -s github-actions/tests -p 'test_*.py'
+python3 -m unittest SKILLS/dual-agent-conflict-gate/test_conflict_gate.py
 ```
 
 Expected:
@@ -782,7 +792,7 @@ Expected:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AGENT协作工具/docs/README.md AGENT协作工具/README.md AGENT协作工具/github-actions/tests/test_update_agent_ledger.py
+git add docs/README.md README.md github-actions/tests/test_update_agent_ledger.py
 git commit -m "docs(collaboration): expose governance cycle plan"
 ```
 
@@ -820,7 +830,7 @@ Type consistency:
 
 ## Execution Handoff
 
-Plan complete and saved to `AGENT协作工具/docs/agent-collaboration-system-v1-governance-cycle-implementation-plan.md`. Two execution options:
+Plan complete and saved to `docs/agent-collaboration-system-v1-governance-cycle-implementation-plan.md`. Two execution options:
 
 1. Subagent-Driven (recommended) - I dispatch a fresh subagent per task, review between tasks, fast iteration
 

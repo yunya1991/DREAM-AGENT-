@@ -1,0 +1,128 @@
+{
+  "_header": {
+    "id": "MEMORY-INDEX",
+    "type": "memory",
+    "owner": "ledger-protocol-agent",
+    "depends": [
+      "00-AGENT-CONSTITUTION"
+    ],
+    "version": 1,
+    "last_verified": "2026-05-20"
+  },
+  "version": 1,
+  "last_updated": "2026-05-20T07:43:10.503667+00:00",
+  "entries": [
+    {
+      "task_id": "test-shared-types-003",
+      "episode_file": "episodes/test-shared-types-003.json",
+      "lessons_generated": [
+        "lesson-auto-test-shared-types-003-low_score"
+      ],
+      "path_id": "path-shared_boundary_change-v1",
+      "patterns_triggered": [],
+      "value_checks_passed": [
+        "V1"
+      ],
+      "retrospective_summary_file": "retrospectives/test-shared-types-003.md"
+    },
+    {
+      "task_id": "test-shared-types-003",
+      "episode_file": "episodes/test-shared-types-003.json",
+      "lessons_generated": [],
+      "path_id": "path-shared_boundary_change-v1",
+      "patterns_triggered": [],
+      "value_checks_passed": [
+        "V1"
+      ],
+      "retrospective_summary_file": "retrospectives/test-shared-types-003.md"
+    },
+    {
+      "task_id": "test-shared-types-003",
+      "episode_file": "episodes/test-shared-types-003.json",
+      "lessons_generated": [],
+      "path_id": "path-shared_boundary_change-v1",
+      "patterns_triggered": [],
+      "value_checks_passed": [
+        "V1"
+      ],
+      "retrospective_summary_file": "retrospectives/test-shared-types-003.md"
+    },
+    {
+      "task_id": "test-serial-dashboard-001",
+      "episode_file": "episodes/test-serial-dashboard-001.json",
+      "lessons_generated": [],
+      "path_id": "path-serial-v1",
+      "patterns_triggered": [],
+      "value_checks_passed": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5"
+      ],
+      "retrospective_summary_file": "retrospectives/test-serial-dashboard-001.md"
+    },
+    {
+      "task_id": "test-rework-fail-004",
+      "episode_file": "episodes/test-rework-fail-004.json",
+      "lessons_generated": [
+        "lesson-auto-test-rework-fail-004-low_score"
+      ],
+      "path_id": "path-serial-v1",
+      "patterns_triggered": [],
+      "value_checks_passed": [
+        "V1"
+      ],
+      "retrospective_summary_file": "retrospectives/test-rework-fail-004.md"
+    },
+    {
+      "task_id": "test-serial-dashboard-001",
+      "episode_file": "episodes/test-serial-dashboard-001.json",
+      "lessons_generated": [],
+      "path_id": "path-serial-v1",
+      "patterns_triggered": [],
+      "value_checks_passed": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5"
+      ],
+      "retrospective_summary_file": "retrospectives/test-serial-dashboard-001.md"
+    }
+  ],
+  "lessons": {
+    "lesson-auto-test-shared-types-003-low_score": {
+      "file": "lessons/pattern_mismatch/lesson-auto-test-shared-types-003-low_score.json",
+      "status": "active",
+      "severity": "medium",
+      "observed_count": 3
+    },
+    "lesson-auto-test-rework-fail-004-low_score": {
+      "file": "lessons/pattern_mismatch/lesson-auto-test-rework-fail-004-low_score.json",
+      "status": "active",
+      "severity": "high"
+    }
+  },
+  "paths": {
+    "path-shared_boundary_change-v1": {
+      "file": "paths/shared_boundary_change/path-shared_boundary_change-v1.json",
+      "validation_count": 1,
+      "avg_efficiency": 1.0
+    },
+    "path-serial-v1": {
+      "file": "paths/serial/path-serial-v1.json",
+      "validation_count": 1,
+      "avg_efficiency": 0.875
+    }
+  },
+  "patterns": {},
+  "stats": {
+    "total_episodes": 6,
+    "total_lessons": 2,
+    "total_paths": 2,
+    "total_patterns": 0,
+    "tasks_with_retrospective": 6,
+    "tasks_without_retrospective": 0
+  }
+}

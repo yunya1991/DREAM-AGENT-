@@ -1,3 +1,13 @@
+---
+id: DUAL-AGENT-FOUNDATION
+type: design
+owner: ledger-protocol-agent
+depends:
+  - 00-AGENT-CONSTITUTION
+version: 1
+last_verified: 2026-05-20
+---
+
 # 双代理协作底座设计
 
 > 仓库：`dreambuddy-v1`  
@@ -670,4 +680,4 @@ Agent: <agent_id>
 - `docs/superpowers/plans/2026-05-16-m1-dual-agent-foundation-task-board.md` — 首批任务看板（SOLO + Claude Code）
 - `docs/superpowers/templates/agent-task-card.md` — 任务卡模板
 - `docs/superpowers/contracts/7-artifact-hub-v2-foundation/` — L1 冻结契约包（4 个接口）
-- `AGENT协作工具/SKILLS/dual-agent-conflict-gate/` — 冲突前置门禁 SKILL
+- `SKILLS/dual-agent-conflict-gate/` — 冲突前置门禁 SKILL

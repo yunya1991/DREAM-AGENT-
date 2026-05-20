@@ -1,3 +1,14 @@
+---
+id: LIFECYCLE-DESIGN
+type: design
+owner: ledger-protocol-agent
+depends:
+  - 00-AGENT-CONSTITUTION
+  - 01-COLLABORATION-PROTOCOL
+version: 1
+last_verified: 2026-05-20
+---
+
 # AGENT 标准开发生命周期与协作监督体系设计
 
 > 仓库：`dreambuddy-v1`  
@@ -10,7 +21,7 @@
 
 当前仓库已经具备一套双代理协作底座：
 
-- 已有 `AGENT协作工具/SKILLS/dual-agent-conflict-gate/` 作为开工前冲突门禁；
+- 已有 `SKILLS/dual-agent-conflict-gate/` 作为开工前冲突门禁；
 - 已有 `STARTED / UPDATED / BLOCKED / DONE` 的 PR 评论广播协议；
 - 已有主责域、共享文件、契约冻结、里程碑分支等规则；
 - 已在 `PR #9` 中完成第一轮双代理协作规范固化。
@@ -127,7 +138,7 @@
 
 该执行策略的详细定义见：
 
-- `AGENT协作工具/docs/agent-efficient-collaboration-mode.md`
+- `docs/agent-efficient-collaboration-mode.md`
 
 ## 4. 总体架构
 
@@ -693,7 +704,7 @@ PR 评论不是附属动作，而是协作协议的一部分。
 
 ### 13.1 保留现有冲突门禁
 
-现有 `AGENT协作工具/SKILLS/dual-agent-conflict-gate/` 应继续保留。
+现有 `SKILLS/dual-agent-conflict-gate/` 应继续保留。
 
 其定位为：
 
@@ -705,13 +716,13 @@ PR 评论不是附属动作，而是协作协议的一部分。
 
 不建议重写现有 `AGENT协作工具`，而是按目录增量扩展：
 
-- `AGENT协作工具/SKILLS/agent-standard-dev-lifecycle/`
-- `AGENT协作工具/SKILLS/agent-design-review/`
-- `AGENT协作工具/SKILLS/agent-dev-execution/`
-- `AGENT协作工具/SKILLS/agent-quality-test/`
-- `AGENT协作工具/SKILLS/agent-collab-supervisor/`
-- `AGENT协作工具/templates/`
-- `AGENT协作工具/github-actions/`
+- `SKILLS/agent-standard-dev-lifecycle/`
+- `SKILLS/agent-design-review/`
+- `SKILLS/agent-dev-execution/`
+- `SKILLS/agent-quality-test/`
+- `SKILLS/agent-collab-supervisor/`
+- `templates/`
+- `github-actions/`
 
 ### 13.3 规则分层
 
@@ -761,11 +772,11 @@ PR 评论不是附属动作，而是协作协议的一部分。
 
 建议本设计后续落地的实施产物包括：
 
-- `AGENT协作工具/docs/agent-standard-dev-lifecycle-implementation-plan.md`
-- `AGENT协作工具/SKILLS/agent-standard-dev-lifecycle/`
-- `AGENT协作工具/SKILLS/agent-design-review/`
-- `AGENT协作工具/SKILLS/agent-dev-execution/`
-- `AGENT协作工具/SKILLS/agent-quality-test/`
-- `AGENT协作工具/SKILLS/agent-collab-supervisor/`
-- `AGENT协作工具/templates/`
-- `AGENT协作工具/github-actions/`
+- `docs/agent-standard-dev-lifecycle-implementation-plan.md`
+- `SKILLS/agent-standard-dev-lifecycle/`
+- `SKILLS/agent-design-review/`
+- `SKILLS/agent-dev-execution/`
+- `SKILLS/agent-quality-test/`
+- `SKILLS/agent-collab-supervisor/`
+- `templates/`
+- `github-actions/`

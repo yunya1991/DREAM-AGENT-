@@ -17,8 +17,8 @@ status: "active"
 
 | 输出 | 路径 | 说明 |
 |------|------|------|
-| 账本 JSON | `AGENT协作工具/ledger/tasks/index.json` | 写入新任务，更新 open_tasks |
-| 账本清单协议 | `AGENT协作工具/ledger/protocols/{WORKSPACE}-LEDGER-{YYYYMMDD}.md` | 标准化协议 Markdown |
+| 账本 JSON | `ledger/tasks/index.json` | 写入新任务，更新 open_tasks |
+| 账本清单协议 | `ledger/protocols/{WORKSPACE}-LEDGER-{YYYYMMDD}.md` | 标准化协议 Markdown |
 | 工作区进度 | `{workspace}/PLAN.md` | 任务状态快照，随账本变化同步 |
 
 ### 命名规范
@@ -49,7 +49,7 @@ acceptance_required: true
 校验模式（只校验不写入）：
 
 ```bash
-python3 AGENT协作工具/SKILLS/collab-ledger-planner/plan_to_tasks.py \
+python3 SKILLS/collab-ledger-planner/plan_to_tasks.py \
   --plan <tech-doc.md> \
   --validate
 ```
@@ -67,7 +67,7 @@ python3 AGENT协作工具/SKILLS/collab-ledger-planner/plan_to_tasks.py \
 ## 一步完成：sync 命令（推荐）
 
 ```bash
-python3 AGENT协作工具/SKILLS/collab-ledger-planner/ledger_sync.py sync \
+python3 SKILLS/collab-ledger-planner/ledger_sync.py sync \
   --plan <tech-doc.md> \
   --goal-id <goal-x> \
   --workspace 7-ARTIFACT-HUB-V2
@@ -84,7 +84,7 @@ python3 AGENT协作工具/SKILLS/collab-ledger-planner/ledger_sync.py sync \
 ## 状态变更后同步
 
 ```bash
-python3 AGENT协作工具/SKILLS/collab-ledger-planner/ledger_sync.py push-status \
+python3 SKILLS/collab-ledger-planner/ledger_sync.py push-status \
   --workspace 7-ARTIFACT-HUB-V2 \
 ```
 
@@ -96,7 +96,7 @@ python3 AGENT协作工具/SKILLS/collab-ledger-planner/ledger_sync.py push-statu
 ## 查看同步状态
 
 ```bash
-python3 AGENT协作工具/SKILLS/collab-ledger-planner/ledger_sync.py status \
+python3 SKILLS/collab-ledger-planner/ledger_sync.py status \
   --workspace 7-ARTIFACT-HUB-V2
 ```
 

@@ -1,7 +1,7 @@
 [账本同步 / LEDGER_SYNC]
 
 Sync Agent: <CLI | GitHub Action>
-Protocol File: AGENT协作工具/ledger/protocols/<WORKSPACE>-LEDGER-<YYYYMMDD>.md
+Protocol File: ledger/protocols/<WORKSPACE>-LEDGER-<YYYYMMDD>.md
 Changed Tasks:
 - <task_id>: <old_status> → <new_status>
 

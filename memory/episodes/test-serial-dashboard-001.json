@@ -1,0 +1,58 @@
+{
+  "task_id": "test-serial-dashboard-001",
+  "episode_type": "task_execution",
+  "trigger": "archived",
+  "task_type": "serial",
+  "decomposition_path": {
+    "goal_id": "test-stress",
+    "parent_task_id": "",
+    "phase_e_pointer": "https://github.com/pr#started",
+    "phase_f_pointer": ""
+  },
+  "execution_path": [
+    {
+      "phase": "Phase 0-8",
+      "status": "archived"
+    }
+  ],
+  "decisions": [],
+  "outcome": {
+    "final_status": "archived",
+    "score": 95,
+    "rework_cycles": 0,
+    "total_duration_minutes": 120,
+    "delivery_pointer": "https://github.com/pr#delivery",
+    "fork_count": 0,
+    "path_efficiency": 0.875
+  },
+  "customer_value_check": {
+    "served_end_user": true,
+    "user_facing_deliverable": "行情看板行情面板",
+    "exploitation_risk_flags": [],
+    "value_checks": [
+      {
+        "value": "V1",
+        "passed": true
+      },
+      {
+        "value": "V2",
+        "passed": true
+      },
+      {
+        "value": "V3",
+        "passed": true
+      },
+      {
+        "value": "V4",
+        "passed": true
+      },
+      {
+        "value": "V5",
+        "passed": true
+      }
+    ]
+  },
+  "created_at": "2026-05-20T07:43:10.503667+00:00",
+  "retrospective_run": true,
+  "retrospective_at": "2026-05-20T07:43:10.503667+00:00"
+}

@@ -1,0 +1,58 @@
+name: Memory Retrospective
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      task_id:
+        description: "Task ID to run retrospective for"
+        required: true
+      trigger:
+        description: "Trigger type: archived | blocked | fork"
+        required: false
+        default: "archived"
+
+jobs:
+  run-retrospective:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run retrospective
+        id: retro
+        run: |
+          TASK_ID="${{ github.event.inputs.task_id || github.event.pull_request.title }}"
+          TRIGGER="${{ github.event.inputs.trigger || 'archived' }}"
+
+          python3 memory/scripts/retrospective_engine.py \
+            --task-index ledger/tasks/index.json \
+            --memory-dir memory/ \
+            --task-id "$TASK_ID" \
+            --trigger "$TRIGGER"
+
+          echo "result=$?" >> $GITHUB_OUTPUT
+
+      - name: Check value violations
+        if: steps.retro.outputs.result == '2'
+        run: |
+          echo "::warning::Value violations detected! Creating governance review task."
+          exit 0
+
+      - name: Commit memory updates
+        run: |
+          git config user.name "Memory System"
+          git config user.email "memory@dream-agent.system"
+          git add memory/
+          if git diff --cached --quiet; then
+            echo "No memory changes to commit"
+          else
+            git commit -m "chore(memory): retrospective for task [skip ci]"
+            git push
+          fi

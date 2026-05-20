@@ -1,7 +1,19 @@
 {
+  "_header": {
+    "id": "LEDGER-INDEX",
+    "type": "ledger",
+    "owner": "ledger-protocol-agent",
+    "depends": [
+      "01-COLLABORATION-PROTOCOL"
+    ],
+    "version": 1,
+    "last_verified": "2026-05-20"
+  },
   "version": 1,
   "generated_at": "2026-05-19T00:10:00.000Z",
-  "open_tasks": [],
+  "open_tasks": [
+    "task-connectivity-gap-trading-hub-001"
+  ],
   "tasks": [
     {
       "goal_id": "goal-pr9-central-hub",
@@ -1663,9 +1675,66 @@
         "merged_by": "Governance AGENT",
         "branch_deleted": true
       }
+    },
+    {
+      "goal_id": "goal-trading-hub-connectivity-20260519",
+      "task_id": "task-connectivity-gap-trading-hub-001",
+      "parent_task_id": "",
+      "title": "7-ARTIFACT-HUB-V2 → 6-TRADING 实时连通性打通（首个协作账单）",
+      "source_type": "assigned",
+      "task_type": "serial",
+      "mode": "STANDARD",
+      "status": "open",
+      "depends_on": [],
+      "dependency_gate": "planned",
+      "shared_boundary": [
+        "7-ARTIFACT-HUB-V2/src/types.ts",
+        "7-ARTIFACT-HUB-V2/src/index.ts",
+        "6-TRADING/",
+        "3-FRONTEND/dream-universal-gateway/src/app/api/"
+      ],
+      "sync_checkpoint": [
+        "7-ARTIFACT-HUB-V2/src/types.ts",
+        "7-ARTIFACT-HUB-V2/src/index.ts",
+        "6-TRADING/README.md"
+      ],
+      "current_sync_state": "none",
+      "owner_agent": "",
+      "validator_agent": "Validator AGENT",
+      "governance_agent": "Governance AGENT",
+      "exclusive_owner_agent": "",
+      "exclusive_until": "",
+      "branch": "",
+      "workspace_path": "7-ARTIFACT-HUB-V2",
+      "claim_pointer": "",
+      "delivery_pointer": "",
+      "validation_pointer": "",
+      "score": 0,
+      "reward": 1,
+      "final_credit_agent": "",
+      "archived_at": "",
+      "knowledge_synced_at": "",
+      "next_required_action": "developer: claim task, post STARTED, implement",
+      "governance_closure": {},
+      "created_at": "2026-05-19T00:00:00.000Z",
+      "created_by": "Claude Code (Developer AGENT)",
+      "bill_description": "三模块连通性差距：7-ARTIFACT-HUB-V2 中台无法直接调用 6-TRADING Python 脚本，交易协调依赖前端 API 代理路由，非实时端到端管道",
+      "bill_findings": {
+        "frontend_to_hub": "已连通 — 4 条 API 路由代理到 Hub Express 服务器 (/api/chain/artifacts, /api/feed, /api/task, /api/reports)",
+        "frontend_to_trading": "已连通 — 9 条 API 路由代理到交易后端 (/api/config/trading-params/*, /api/trade/balance 等)",
+        "hub_to_trading": "未连通 — 仅 types.ts 中存在类型引用 ('trading', WorkflowType)，无 Python 脚本直接调用",
+        "trading_to_hub": "单向管道 — mailbox_scanner.py 投递到 artifacts/trading/ 目录，非实时 API",
+        "frontend_pages": "/dashboard (交易仪表板), /chain (双工作流可视化), /feed (Artifact 流), /market/* (市场控制台), /board/* (管委会控制台)"
+      },
+      "acceptance_criteria": [
+        "7-ARTIFACT-HUB-V2 可直接调用 6-TRADING 核心 Python 脚本（非前端代理）",
+        "交易信号 → Hub 决策 → Trading 执行 形成实时闭环",
+        "新增 /api/trading/* 路由在 Hub 侧直接桥接 Python 进程或子进程调用",
+        "三个独立前端页面均可实时展示交易状态变化"
+      ]
     }
   ],
-  "last_updated": "2026-05-18T16:03:47.477Z",
-  "ledger_agent_sync": "2026-05-18T16:03:47.477Z",
-  "summary": "ledgered:39 | open:0"
+  "last_updated": "2026-05-19T00:00:00.000Z",
+  "ledger_agent_sync": "2026-05-19T00:00:00.000Z",
+  "summary": "ledgered:39 | open:1"
 }

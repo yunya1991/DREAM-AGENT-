@@ -1,0 +1,15 @@
+{
+  "lesson_id": "lesson-auto-test-rework-fail-004-low_score",
+  "category": "pattern_mismatch",
+  "severity": "high",
+  "first_observed": "2026-05-20",
+  "observed_count": 1,
+  "last_observed": "2026-05-20T07:39:57.410984+00:00",
+  "task_ids": [
+    "test-rework-fail-004"
+  ],
+  "status": "active",
+  "root_cause_normalized": "serial low_score",
+  "situation": "Task test-rework-fail-004 (serial) experienced low_score",
+  "prevention_rule": "Review optimal path for serial before starting similar tasks"
+}

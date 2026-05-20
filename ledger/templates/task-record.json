@@ -37,5 +37,16 @@
     "followup_tasks": [],
     "closure_agent": "",
     "closure_completed_at": ""
-  }
+  },
+  "memory_pointers": {
+    "episode_file": "",
+    "retrospective_file": "",
+    "lessons_applied": [],
+    "path_followed": "",
+    "new_lessons_created": [],
+    "value_checks_passed": []
+  },
+  "branch_history": [],
+  "fork_count": 0,
+  "path_efficiency_score": null
 }

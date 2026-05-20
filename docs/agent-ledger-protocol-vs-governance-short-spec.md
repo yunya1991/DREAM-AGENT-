@@ -1,3 +1,13 @@
+---
+id: LEDGER-VS-GOVERNANCE
+type: spec
+owner: ledger-protocol-agent
+depends:
+  - 00-AGENT-CONSTITUTION
+version: 1
+last_verified: 2026-05-20
+---
+
 # 账本协议AGENT 与 治理AGENT 职责拆分短规范（一页版）
 
 > 版本：v1  
@@ -20,15 +30,15 @@
 
 允许修改范围（仅限以下路径）：
 
-- `AGENT协作工具/ledger/**`
+- `ledger/**`
 - `docs/superpowers/contracts/**`
-- `AGENT协作工具/docs/**`
+- `docs/**`
 
 禁止修改范围（必须 fail-closed）：
 
 - `.github/workflows/**`
-- `AGENT协作工具/github-actions/**`
-- `AGENT协作工具/SKILLS/**`（除非是纯文档性说明且不改变门禁行为）
+- `github-actions/**`
+- `SKILLS/**`（除非是纯文档性说明且不改变门禁行为）
 
 输出职责：
 
@@ -41,11 +51,11 @@
 允许修改范围：
 
 - `7-ARTIFACT-HUB-V2/**`（以及 PR 已声明的例外范围）
-- `.github/**` 与 `AGENT协作工具/github-actions/**`（仅限治理/门禁/自动化所必需）
+- `.github/**` 与 `github-actions/**`（仅限治理/门禁/自动化所必需）
 
 禁止修改范围（必须 fail-closed）：
 
-- 不得直接修改 `AGENT协作工具/ledger/**` 来“凑齐门禁”
+- 不得直接修改 `ledger/**` 来“凑齐门禁”
 - 不得在未发 `UPDATED` 的情况下扩 scope
 
 输出职责：

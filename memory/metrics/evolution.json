@@ -1,0 +1,51 @@
+{
+  "_header": {
+    "id": "EVOLUTION-METRICS",
+    "type": "metrics",
+    "owner": "ledger-protocol-agent",
+    "depends": [
+      "RETROSPECTIVE-ENGINE"
+    ],
+    "version": 1,
+    "last_verified": "2026-05-20"
+  },
+  "version": 1,
+  "generated_at": "2026-05-20T07:43:10.503667+00:00",
+  "by_task_type": {
+    "shared_boundary_change": {
+      "total_tasks": 9,
+      "success_rate": 1.0,
+      "avg_quality_score": 75.0,
+      "avg_rework_cycles": 0,
+      "avg_time_minutes": 240,
+      "best_path_id": "path-shared_boundary_change-v1",
+      "common_failures": [],
+      "best_efficiency": 1.0
+    },
+    "serial": {
+      "total_tasks": 3,
+      "success_rate": 1.0,
+      "avg_quality_score": 81.7,
+      "avg_rework_cycles": 0,
+      "avg_time_minutes": 140,
+      "best_path_id": "path-serial-v1",
+      "common_failures": [],
+      "best_efficiency": 0.875
+    }
+  },
+  "by_agent": {},
+  "system_health": {
+    "total_lessons_learned": 2,
+    "lessons_resolved": 0,
+    "lessons_active": 2,
+    "optimal_paths_defined": 2,
+    "patterns_recognized": 0,
+    "value_violations_detected": 0,
+    "process_improvements_proposed": 0,
+    "process_improvements_adopted": 0
+  },
+  "trending": {
+    "recurring_blockers": [],
+    "efficiency_gains": []
+  }
+}

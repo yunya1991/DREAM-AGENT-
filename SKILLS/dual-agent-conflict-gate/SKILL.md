@@ -235,7 +235,7 @@ Agent: <agent_id>
 ## 调用示例
 
 ```bash
-python3 AGENT协作工具/SKILLS/dual-agent-conflict-gate/conflict_gate.py \
+python3 SKILLS/dual-agent-conflict-gate/conflict_gate.py \
   --agent <agent_id> \
   --task "搭建 ops-ui 页面壳" \
   --files "7-ARTIFACT-HUB-V2/src/ops-ui/index.ts,7-ARTIFACT-HUB-V2/src/ops-ui/health.ts" \

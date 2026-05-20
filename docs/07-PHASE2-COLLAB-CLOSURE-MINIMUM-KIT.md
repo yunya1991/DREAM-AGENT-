@@ -1,3 +1,13 @@
+---
+id: 07-PHASE2-COLLAB-CLOSURE-MINIMUM-KIT
+type: design
+owner: ledger-protocol-agent
+depends:
+  - 01-COLLABORATION-PROTOCOL
+version: 1
+last_verified: 2026-05-20
+---
+
 # Phase 2 协作闭环：最小补齐方案清单（A/B/C/D）
 
 > 目标：把“Phase 2 协作链唯一阻塞点（必须人工写账本/发验收清单）”变成可由账本协作AGENT + 治理AGENT 自动完成的标准闭环。
@@ -43,9 +53,9 @@
 **必须补齐（脚本化，P0）**
 
 - **新增/补齐的文件（建议归属）**
-  - `AGENT协作工具/github-actions/ledger_governance_promote.py`（建议新增）
+  - `github-actions/ledger_governance_promote.py`（建议新增）
     - 输入：`--task-id ...`（支持多次）、`--to accepted`、`--workspace-path ...`
-    - 行为：按规则修改 `AGENT协作工具/ledger/tasks/index.json` 并更新 open_tasks 视图
+    - 行为：按规则修改 `ledger/tasks/index.json` 并更新 open_tasks 视图
 - **硬规则（脚本必须强制）**
   - 只允许 `planned -> accepted`（不允许跳跃）
   - 推进时必须写入 `next_required_action` 或 `sync_checkpoint`（见 1.2）
@@ -100,7 +110,7 @@
     - `## Phase 1/2/3...`
     - `- [ ] <任务>`（每条任务一句话，避免长段落）
   - 每个 Phase 下至少 3 个任务、最多 10 个任务（避免过细/过粗）
-  - 每条任务必须能落到一个明确工作区路径（例如 `7-ARTIFACT-HUB-V2/src/...` 或 `AGENT协作工具/...`）
+  - 每条任务必须能落到一个明确工作区路径（例如 `7-ARTIFACT-HUB-V2/src/...` 或 `...`）
 - **脚本化部分（复用既有）**
   - 使用 `collab-ledger-planner` 的 `plan_to_tasks.py` 将 `PROJECT_PLAN.md` 解析为 tasks 草案并可 `--apply` 落账本
 
@@ -123,7 +133,7 @@
 
 **脚本化部分（P1）**
 
-- 通用桥 CLI：`AGENT协作工具/github-actions/ledger_workspace_bridge.py`（已存在/已验证）
+- 通用桥 CLI：`github-actions/ledger_workspace_bridge.py`（已存在/已验证）
   - 输入：`--workspace-path`（可切换工作区）
   - 输出：稳定 JSON（open ledger tasks join hub task/result）
 
@@ -138,23 +148,23 @@
 
 ### 3.1 账本真源与模板
 
-- 账本真源：`AGENT协作工具/ledger/tasks/index.json`
-- 任务模板：`AGENT协作工具/ledger/templates/task-record.json`
+- 账本真源：`ledger/tasks/index.json`
+- 任务模板：`ledger/templates/task-record.json`
 
 ### 3.2 账本关键脚本（已存在）
 
-- open_tasks 视图刷新：`AGENT协作工具/github-actions/refresh_open_tasks.py`
-- 账本写入与治理迁移：`AGENT协作工具/github-actions/update_agent_ledger.py`
-- 治理闭环 runner：`AGENT协作工具/github-actions/run_governance_ledger_cycle.py`
+- open_tasks 视图刷新：`github-actions/refresh_open_tasks.py`
+- 账本写入与治理迁移：`github-actions/update_agent_ledger.py`
+- 治理闭环 runner：`github-actions/run_governance_ledger_cycle.py`
 
 ### 3.3 工作区↔账本聚合桥（已存在）
 
-- 通用桥 CLI：`AGENT协作工具/github-actions/ledger_workspace_bridge.py`
+- 通用桥 CLI：`github-actions/ledger_workspace_bridge.py`
 
 ### 3.4 任务拆解 SKILL（已存在）
 
-- SKILL 入口：`AGENT协作工具/SKILLS/collab-ledger-planner/SKILL.md`
-- 规则解析器：`AGENT协作工具/SKILLS/collab-ledger-planner/plan_to_tasks.py`
+- SKILL 入口：`SKILLS/collab-ledger-planner/SKILL.md`
+- 规则解析器：`SKILLS/collab-ledger-planner/plan_to_tasks.py`
 
 ### 3.5 治理自动化（workflow 侧）
 
@@ -221,14 +231,14 @@
   - 顶层 `# <项目名>`
   - 至少 1 个 `## Phase ...`
   - Phase 下使用 `- [ ] <任务>` 列表项
-  - 每条任务一句话，并能落到明确路径（`7-ARTIFACT-HUB-V2/...` 或 `AGENT协作工具/...`）
+  - 每条任务一句话，并能落到明确路径（`7-ARTIFACT-HUB-V2/...` 或 `...`）
 
 ### A3. 将 Project Plan 拆解写入协作账本（脚本化完成）
 
 在仓库根目录执行：
 
 ```bash
-python3 AGENT协作工具/SKILLS/collab-ledger-planner/plan_to_tasks.py \
+python3 SKILLS/collab-ledger-planner/plan_to_tasks.py \
   --plan 7-ARTIFACT-HUB-V2/PROJECT_PLAN.md \
   --goal-id goal-phase2-7-artifact-hub-v2 \
   --task-prefix phase2-ahv2 \
@@ -237,7 +247,7 @@ python3 AGENT协作工具/SKILLS/collab-ledger-planner/plan_to_tasks.py \
 ```
 
 产物：
-- `AGENT协作工具/ledger/tasks/index.json` 新增 tasks 草案（默认 status=planned）
+- `ledger/tasks/index.json` 新增 tasks 草案（默认 status=planned）
 
 ### A4. 为“planned -> accepted(ready)”准备验收清单（自然语言生成 + 机读落点）
 
@@ -253,7 +263,7 @@ python3 AGENT协作工具/SKILLS/collab-ledger-planner/plan_to_tasks.py \
 在仓库根目录执行（示例一次推进 3 个 Phase 2 任务）：
 
 ```bash
-python3 AGENT协作工具/github-actions/ledger_governance_promote.py \
+python3 github-actions/ledger_governance_promote.py \
   --workspace-path 7-ARTIFACT-HUB-V2 \
   --to accepted \
   --task-id <task_id_1> \
@@ -273,7 +283,7 @@ python3 AGENT协作工具/github-actions/ledger_governance_promote.py \
 用桥聚合视图检查 open tasks 是否能 join 到工作区运行态证据：
 
 ```bash
-python3 AGENT协作工具/github-actions/ledger_workspace_bridge.py \
+python3 github-actions/ledger_workspace_bridge.py \
   --workspace-path 7-ARTIFACT-HUB-V2 \
   --limit 50
 ```

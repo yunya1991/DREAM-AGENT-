@@ -1,0 +1,15 @@
+{
+  "lesson_id": "lesson-auto-test-shared-types-003-low_score",
+  "category": "pattern_mismatch",
+  "severity": "medium",
+  "first_observed": "2026-05-20",
+  "observed_count": 3,
+  "last_observed": "2026-05-20T07:39:20.019337+00:00",
+  "task_ids": [
+    "test-shared-types-003"
+  ],
+  "status": "active",
+  "root_cause_normalized": "shared_boundary_change low_score",
+  "situation": "Task test-shared-types-003 (shared_boundary_change) experienced low_score",
+  "prevention_rule": "Review optimal path for shared_boundary_change before starting similar tasks"
+}
