@@ -1,4 +1,5 @@
-import { MemoryEvent, mockMemoryEvents } from './data/memory'
+import React from 'react'
+import { MemoryEvent, mockMemoryEvents } from '../data/memory'
 import { AlertTriangle, CheckCircle2, Info, BookOpen } from 'lucide-react'
 
 const TYPE_CONFIG: Record<MemoryEvent['type'], { icon: React.ComponentType<{ className?: string }>; color: string; label: string }> = {

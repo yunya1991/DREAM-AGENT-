@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Block } from './data/blocks'
+import React, { useState } from 'react'
+import { Block } from '../data/blocks'
 import { Link, Shield, Hash, Clock } from 'lucide-react'
 
 interface ChainVizProps {

@@ -1,5 +1,6 @@
+import React from 'react'
 import { Pickaxe, Coins, Users, Play, Square } from 'lucide-react'
-import { mockBlocks } from './data/blocks'
+import { mockBlocks } from '../data/blocks'
 
 interface MiningStatusProps {
   isMining: boolean

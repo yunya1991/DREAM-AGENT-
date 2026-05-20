@@ -1,5 +1,6 @@
+import React from 'react'
 import { DataTable } from '../marketplace'
-import { ledgerColumns, mockLedger } from './data/ledger'
+import { ledgerColumns, mockLedger } from '../data/ledger'
 
 export function LedgerFeed() {
   return (

@@ -1,138 +1,91 @@
-import { useState, useCallback } from 'react'
-import { Notification, FileManager } from './marketplace'
+import { useState, useCallback, lazy, Suspense } from 'react'
 import { Tabs } from './components/Tabs'
-import { ModuleDemoTab } from './demo/ModuleDemoTab'
-import { FileDemoTab } from './demo/FileDemoTab'
-import { ChainViz } from './monitoring/ChainViz'
-import { DAGGraph } from './monitoring/DAGGraph'
-import { LedgerFeed } from './monitoring/LedgerFeed'
-import { MemoryTimeline } from './monitoring/MemoryTimeline'
-import { MiningActivityFeed } from './monitoring/MiningActivity'
-import { MiningStatus } from './monitoring/MiningStatus'
-import { useMiningSim } from './monitoring/hooks/useMiningSim'
-import { mockBlocks } from './monitoring/data/blocks'
+import { Notification, notify, DataTable, Dashboard, QuotePanel, FileManager } from './marketplace'
+import { mockSymbols } from './data/quotes'
+import { mockOrders, orderColumns } from './data/orders'
 import { mockFileTree } from './data/file-tree'
+import { mockWidgets } from './data/widgets'
 
-const PRIMARY_TABS = ['项目监控', '业务功能']
+const TABS = ['Dashboard', '行情面板', '数据表格', '文件管理', '通知中心']
 
-// ── Monitoring Sub-tabs ──────────────────────────────────────
-const MONITOR_TABS = ['区块链', 'DAG 依赖', '账本', '记忆系统', '文件结构']
+function DashboardTab() {
+  return <Dashboard widgets={mockWidgets} theme="auto" />
+}
 
-function MonitoringView() {
-  const [activeTab, setActiveTab] = useState(MONITOR_TABS[0])
-  const { isMining, progress, activities, startMining, stopMining } = useMiningSim()
-
+function QuoteTab() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <MiningStatus
-        isMining={isMining}
-        progress={progress}
-        onStart={startMining}
-        onStop={stopMining}
-      />
-      <Tabs tabs={MONITOR_TABS} activeTab={activeTab} onTabChange={setActiveTab} />
-      {activeTab === '区块链' && (
-        <>
-          <ChainViz blocks={mockBlocks} miningHeight={isMining ? mockBlocks.length : null} miningProgress={progress} />
-          <MiningActivityFeed activities={activities} />
-        </>
-      )}
-      {activeTab === 'DAG 依赖' && <DAGGraph />}
-      {activeTab === '账本' && <LedgerFeed />}
-      {activeTab === '记忆系统' && <MemoryTimeline />}
-      {activeTab === '文件结构' && (
-        <div className="p-4">
-          <FileManager files={mockFileTree} rootName="DREAM-AG协作协议" />
-        </div>
-      )}
+    <div className="p-4 max-w-3xl mx-auto">
+      <QuotePanel symbols={mockSymbols} colorScheme="red-up" decimals={2} />
     </div>
   )
 }
 
-// ── Business Function Sub-tabs ───────────────────────────────
-const BIZ_TABS = ['模块演示', '文件管理', '通知中心']
-
-function BusinessView() {
-  const [activeTab, setActiveTab] = useState(BIZ_TABS[0])
-
+function TableTab() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Tabs tabs={BIZ_TABS} activeTab={activeTab} onTabChange={setActiveTab} />
-      {activeTab === '模块演示' && <ModuleDemoTab />}
-      {activeTab === '文件管理' && <FileDemoTab />}
-      {activeTab === '通知中心' && <NotificationCenterTab />}
+    <div className="p-4">
+      <DataTable columns={orderColumns} data={mockOrders} pageSize={10} searchable exportable />
     </div>
   )
 }
 
-function NotificationCenterTab() {
-  const [notifications, setNotifications] = useState<string[]>([])
-
-  const add = (type: string, title: string, message: string) => {
-    setNotifications((p) => [...p, `${type} — ${title}: ${message}`])
-  }
-
+function FileTab() {
   return (
-    <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen max-w-2xl mx-auto">
-      <h2 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">
-        通知中心 — 测试所有通知类型
-      </h2>
-      <div className="grid grid-cols-2 gap-3 mb-6">
-        {([
-          ['info', 'Info 通知', '提示', '这是一条普通提示通知', 'blue'],
-          ['success', 'Success 通知', '成功', '操作已成功完成', 'green'],
-          ['warning', 'Warning 通知', '警告', '请注意此操作可能影响其他模块', 'yellow'],
-          ['error', 'Error 通知', '错误', '网络连接失败，请稍后重试', 'red'],
-        ] as const).map(([type, label, title, msg, color]) => (
+    <div className="p-4">
+      <FileManager files={mockFileTree} rootName="DREAM-AG协作协议" />
+    </div>
+  )
+}
+
+function NotificationTab() {
+  const [msgs, setMsgs] = useState<string[]>([])
+  const types = ['info', 'success', 'warning', 'error'] as const
+  return (
+    <div className="p-8 max-w-2xl mx-auto">
+      <h2 className="text-xl font-bold mb-4">通知中心</h2>
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        {types.map((t) => (
           <button
-            key={type}
-            onClick={() => add(type, title, msg)}
-            className={`px-4 py-2.5 text-sm rounded-lg bg-${color}-50 dark:bg-${color}-900/20 text-${color}-700 dark:text-${color}-400 border border-${color}-200 dark:border-${color}-800 hover:bg-${color}-100 dark:hover:bg-${color}-900/30 transition-colors`}
+            key={t}
+            onClick={() => {
+              notify[t](`${t} 通知`, { message: `这是一条 ${t} 类型的通知` })
+              setMsgs((p) => [...p, `${t}: ${new Date().toLocaleTimeString()}`])
+            }}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300"
           >
-            {label}
+            {t}
           </button>
         ))}
       </div>
-      {notifications.length > 0 && (
+      {msgs.length > 0 && (
         <div className="space-y-1">
-          <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
-            通知历史 ({notifications.length})
-          </h3>
-          {notifications.map((msg, i) => (
-            <div key={i} className="text-sm text-gray-700 dark:text-gray-300 py-1 border-b border-gray-100 dark:border-gray-700">
-              {msg}
-            </div>
-          ))}
+          {msgs.map((m, i) => <div key={i} className="text-sm text-gray-600">{m}</div>)}
         </div>
       )}
     </div>
   )
 }
 
-// ── Root App ─────────────────────────────────────────────────
 export default function App() {
-  const [primaryTab, setPrimaryTab] = useState(PRIMARY_TABS[0])
-
-  const handleTabChange = useCallback((tab: string) => {
-    setPrimaryTab(tab)
-  }, [])
+  const [activeTab, setActiveTab] = useState(TABS[0])
 
   return (
-    <div>
-      {/* Primary Navigation */}
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <header className="sticky top-0 z-50 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="flex items-center justify-between px-4 py-2">
           <h1 className="text-lg font-bold text-gray-800 dark:text-gray-200">
-            DREAM Frontend
+            Modules Demo
           </h1>
           <span className="text-xs text-gray-500 dark:text-gray-400">
-            5 modules loaded · {mockBlocks.length} blocks mined
+            5 marketplace modules
           </span>
         </div>
-        <Tabs tabs={PRIMARY_TABS} activeTab={primaryTab} onTabChange={handleTabChange} />
+        <Tabs tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
       </header>
-      {primaryTab === '项目监控' && <MonitoringView />}
-      {primaryTab === '业务功能' && <BusinessView />}
+      {activeTab === 'Dashboard' && <DashboardTab />}
+      {activeTab === '行情面板' && <QuoteTab />}
+      {activeTab === '数据表格' && <TableTab />}
+      {activeTab === '文件管理' && <FileTab />}
+      {activeTab === '通知中心' && <NotificationTab />}
       <Notification position="top-right" />
     </div>
   )

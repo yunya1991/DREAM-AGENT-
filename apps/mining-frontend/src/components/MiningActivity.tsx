@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react'
-import { MiningActivity } from './hooks/useMiningSim'
+import React, { useRef, useEffect } from 'react'
+import { MiningActivity } from '../hooks/useMiningSim'
 import { Activity, Shield, CheckCircle2, AlertTriangle } from 'lucide-react'
 
 const TYPE_ICONS: Record<MiningActivity['type'], React.ComponentType<{ className?: string }>> = {
