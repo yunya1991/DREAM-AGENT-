@@ -24,3 +24,7 @@ build/
 # Temp files
 *.tmp
 *.bak
+
+# Frontend apps
+apps/*/node_modules/
+apps/*/dist/
