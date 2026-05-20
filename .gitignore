@@ -2,6 +2,7 @@ __pycache__/
 .pytest_cache/
 
 # Test artifacts (auto-generated, not part of protocol)
+artifacts/
 7-ARTIFACT-HUB-V2/
 memory/episodes/test-*.json
 memory/episodes/task-pr9-*.json
