@@ -172,9 +172,9 @@ class GovernanceTemplateFieldTests(unittest.TestCase):
             ROOT / "templates" / "pr-comment-validation-result.md"
         ).read_text(encoding="utf-8")
         task_card = (
-            ROOT.parent / "docs" / "superpowers" / "templates" / "agent-task-card.md"
+            ROOT / "docs" / "superpowers" / "templates" / "agent-task-card.md"
         ).read_text(encoding="utf-8")
-        pr_template = (ROOT.parent / ".github" / "pull_request_template.md").read_text(
+        pr_template = (ROOT / ".github" / "pull_request_template.md").read_text(
             encoding="utf-8"
         )
 
