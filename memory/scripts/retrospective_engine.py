@@ -130,8 +130,9 @@ def run_retrospective(task_index_path: str, memory_dir: str, task_id: str, trigg
     # ── Step 1: Gather Evidence ──
     task = find_task(task_index_path, task_id)
     if not task:
-        print(f"[Retrospective] ERROR: Task {task_id} not found in {task_index_path}")
-        sys.exit(1)
+        print(f"[Retrospective] SKIP: Task {task_id} not found in {task_index_path}")
+        print("[Retrospective] This is expected when the trigger is a PR merge without a matching ledger task.")
+        sys.exit(0)
 
     memory_index = load_json(os.path.join(memory_dir, "index.json")) or {
         "version": 1,
