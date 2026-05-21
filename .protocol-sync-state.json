@@ -1,6 +1,6 @@
 {
-  "last_synced_sha": "254de5fa54a1d159de6e4d14385dbca5d5cfb0d6",
-  "synced_at": "2026-05-18T14:20:00.000Z",
+  "last_synced_sha": "2f6bb73d01a6152dc2b07e663991929efbd97af4",
+  "last_synced_date": "2026-05-21",
   "synced_docs": [
     "docs/00-AGENT-CONSTITUTION.md",
     "docs/01-COLLABORATION-PROTOCOL.md",
@@ -10,6 +10,7 @@
     "docs/05-FAQ.md",
     "docs/06-SKILLS-INVENTORY.md",
     "docs/07-PHASE2-COLLAB-CLOSURE-MINIMUM-KIT.md",
+    "docs/08-FILE-HEADER-PROTOCOL.md",
     "docs/README.md",
     "docs/agent-collaboration-system-v1-design.md",
     "docs/agent-collaboration-system-v1-governance-agent-implementation-plan.md",
@@ -21,12 +22,5 @@
     "docs/agent-standard-dev-lifecycle-implementation-plan.md",
     "docs/dual-agent-collaboration-foundation-design.md",
     "docs/self-hosted-runner.md"
-  ],
-  "related_files_changed": [
-    "SKILLS/collab-ledger-planner/SKILL.md",
-    "templates/pr-comment-ledger-sync.md",
-    "github-actions/tests/test_collab_ledger_sync_contract.py",
-    "ledger/README.md"
-  ],
-  "note": "PR #49 fix(collab): repair ledger sync workflow contract. Updated: 01-COLLABORATION-PROTOCOL (LEDGER_SYNC anchor notes), 03-WORKFLOWS-AND-NORMS (step 7 push-status norm), SKILL.md (--print-comment clarification), new template pr-comment-ledger-sync.md, new contract test. SHA updated to 254de5fa."
+  ]
 }
