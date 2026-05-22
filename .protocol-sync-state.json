@@ -1,6 +1,6 @@
 {
-  "last_synced_sha": "2f6bb73d01a6152dc2b07e663991929efbd97af4",
-  "last_synced_date": "2026-05-21",
+  "last_synced_sha": "d4f783d02bc07d56679f747419d9f6b0fe4bcfae",
+  "last_synced_date": "2026-05-22",
   "synced_docs": [
     "docs/00-AGENT-CONSTITUTION.md",
     "docs/01-COLLABORATION-PROTOCOL.md",
@@ -21,6 +21,7 @@
     "docs/agent-standard-dev-lifecycle-design.md",
     "docs/agent-standard-dev-lifecycle-implementation-plan.md",
     "docs/dual-agent-collaboration-foundation-design.md",
-    "docs/self-hosted-runner.md"
+    "docs/self-hosted-runner.md",
+    "docs/superpowers/templates/agent-task-card.md"
   ]
 }
